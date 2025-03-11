@@ -7,9 +7,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Текст писать тут
-        </p>
+        <p>Цель: Систематизировать знания по React и его окружения</p>
+        <p>Технологии: Full Stack .NET C#, React, MSSQL</p>
+        <p>Опыт: 6 лет в разработке</p>
       </header>
     </div>
   );
