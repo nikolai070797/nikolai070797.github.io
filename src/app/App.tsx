@@ -7,9 +7,18 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>Цель: Систематизировать знания по React и его окружения</p>
-        <p>Технологии: Full Stack .NET C#, React, MSSQL</p>
-        <p>Опыт: 6 лет в разработке</p>
+        <div>
+          <h1>Николай Тартышный</h1>
+          <p>
+            <strong>Цель:</strong> Систематизировать знания по React и его окружения
+          </p>
+          <p>
+            <strong>Технологии:</strong> Full Stack .NET C#, React, MSSQL
+          </p>
+          <p>
+            <strong>Опыт:</strong> 6 лет в разработке
+          </p>
+        </div>
       </header>
     </div>
   );
