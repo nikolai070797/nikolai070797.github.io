@@ -11,6 +11,7 @@
     "lint": "eslint src --fix",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "predeploy": "npm run build",
     "deploy": "npx gh-pages -d dist -e nikolai070797.github.io"
   },
   "license": "MIT",
