@@ -15,7 +15,8 @@
         "plugin:jest/recommended",
         "eslint:recommended",
         "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
     ],
     "overrides": [],
     "parser": "@typescript-eslint/parser",
@@ -24,7 +25,8 @@
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "import"
     ],
     "rules": {
         "@typescript-eslint/no-var-requires": 0,
@@ -45,7 +47,9 @@
                     ".ts",
                     ".tsx"
                 ]
-            }
+            },
+            "webpack": {},
+            "typescript": {}
         }
     }
 }

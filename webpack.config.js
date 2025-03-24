@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin');
 
 const port = 2233;
 const dist = path.join(__dirname, 'dist');
@@ -24,8 +25,11 @@ module.exports = (_, args) => {
       modules: [src, 'node_modules'],
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       alias: {
-        src,
+        // src,
+        // components: path.resolve(__dirname, 'src/components'),
+        // '^generic/([\\w_]+)': path.resolve(__dirname, 'src/components/generic/\\1/\\1'),
       },
+      plugins: [new TsconfigPathsPlugin()]
     },
 
     entry: './index.tsx',
@@ -99,7 +103,7 @@ module.exports = (_, args) => {
         typescript: {
           configFile: path.join(__dirname, 'tsconfig.json'),
         },
-      }),
+      })
     ],
   };
 };

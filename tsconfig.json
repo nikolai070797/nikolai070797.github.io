@@ -1,9 +1,11 @@
 {
 	"compilerOptions": {
-		"outDir": "./dist",
+	  "outDir": "./dist",
 	  "baseUrl": ".",
 	  "paths": {
-			"src/*": ["src/*"]
+		"src/*": ["./src/*"],
+		"components/*": ["./src/components/*"],
+		"generic/*": ["./src/components/generic/*"]
 	  },
 	  "lib": ["dom", "dom.iterable", "esnext"],
 	  "allowJs": true,
