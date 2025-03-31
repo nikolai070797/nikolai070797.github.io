@@ -20,14 +20,15 @@ const config: StorybookConfig = {
       }
     }
   ],
-  framework: {
-    name: '@storybook/react-vite',
-    options: {
-      builder: {
-        viteConfigPath: 'sb-vite.config.ts',
-      },
-    },
-  },
+  // framework: { // Работает
+  //   name: '@storybook/react-vite',
+  //   options: {
+  //     builder: {
+  //       viteConfigPath: 'sb-vite.config.ts',
+  //     },
+  //   },
+  // },
+  framework: '@storybook/react-vite', // Не работает
   docs: {
     autodocs: "tag",
   },
