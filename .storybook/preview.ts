@@ -1,4 +1,5 @@
 import type { Preview } from "@storybook/react";
+import { withRouter, reactRouterParameters } from 'storybook-addon-remix-react-router';
 
 const preview: Preview = {
   parameters: {
@@ -9,6 +10,7 @@ const preview: Preview = {
         date: /Date$/,
       },
     },
+    reactRouter: reactRouterParameters({}),
   },
 };
 
