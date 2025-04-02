@@ -8,8 +8,6 @@ declare module "react-router" {
 
 type Params = {
   "/": {};
-  "/about": {};
-  "/about/team": {};
   "/*": {
     "*": string;
   };
