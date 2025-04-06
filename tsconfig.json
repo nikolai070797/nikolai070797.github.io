@@ -21,9 +21,8 @@
 			"@shared/*": ["./src/shared/*"],
 			"@widgets/*": ["./src/widgets/*"],
 
-			"@/*": ["./src/*"],
+			"@/*": ["./src/*"]
 
-      "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
     },
     "esModuleInterop": true,
     "allowImportingTsExtensions": true,

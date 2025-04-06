@@ -65,15 +65,18 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.0.1",
     "@mui/lab": "latest",
     "@mui/material": "^7.0.1",
-    "@mui/styled-engine-sc": "^7.0.1",
     "@react-router/node": "^7.4.0",
     "@react-router/serve": "^7.4.0",
     "isbot": "^5.1.17",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.4.0",
-    "react-router-dom": "^7.4.0"
+    "react-router-dom": "^7.4.0",
+    "styled-components": "^6.1.17"
   }
 }

@@ -1,23 +1,21 @@
-import s from "./Home.module.scss"
+// import s from "./Home.module.scss"
+// import { header } from "@mui/material";
+
+import { useEffect } from "react";
 
 const Home = () => {
+
+	const title ='Мое приложение';
+  
+	useEffect(() => {
+	  document.title = title;
+	}, [title]);
+	  
 	return (
-		<div className={s.home}>
-			<p className={s.font}>
-				Hello from{" "}
-				<a
-					href="https://github.com/yunglocokid"
-					target="_blank"
-					className={s.link}
-				>
-					yunglocokid
-				</a>
-			</p>
-			<pre className={s.hint}>
-				You can edit <span className={s.path}>src/pages/Home</span> to
-				start {"<3"}!<br />
-			</pre>
-		</div>
+		<>
+			<h1>Home page</h1>
+
+		</>		
 	)
 }
 
