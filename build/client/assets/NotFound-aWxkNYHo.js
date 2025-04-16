@@ -1,1 +1,0 @@
-import{w as t}from"./with-props-DPFWGcRz.js";import{l as o,L as n}from"./chunk-K6CSEXPM-wuP8OmLw.js";const e=t(function(){return o.jsxs("div",{children:[o.jsx("h1",{children:"404 - Страница не найдена"}),o.jsx(n,{to:"/",children:"Вернуться на главную"})]})});export{e as default};

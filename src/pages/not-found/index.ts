@@ -1,3 +1,7 @@
-import NotFound from "./ui/NotFound"
+import NotFound from './ui/NotFound';
 
-export default NotFound 
+export const meta = () => {
+  return [{ title: 'Главная страница' }];
+};
+
+export default NotFound;

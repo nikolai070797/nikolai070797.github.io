@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Header } from './Header';
+import { default as Header } from '@shared/ui/header';
 import './page.css';
 
 export const Page = () => {
@@ -9,10 +9,10 @@ export const Page = () => {
   return (
     <article>
       <Header
-        user={user}
-        onLogin={() => setUser({ name: 'Jane Doe' })}
-        onLogout={() => setUser(undefined)}
-        onCreateAccount={() => setUser({ name: 'Jane Doe' })}
+        // user={user}
+        // onLogin={() => setUser({ name: 'Jane Doe' })}
+        // onLogout={() => setUser(undefined)}
+        // onCreateAccount={() => setUser({ name: 'Jane Doe' })}
       />
 
       <section className="storybook-page">

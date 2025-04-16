@@ -1,1 +1,0 @@
-import{w as o}from"./with-props-DPFWGcRz.js";import{l as t,O as s}from"./chunk-K6CSEXPM-wuP8OmLw.js";const i=o(function(){return t.jsxs("div",{children:[t.jsx("h1",{children:"О нас"}),t.jsx(s,{})," "]})});export{i as default};
