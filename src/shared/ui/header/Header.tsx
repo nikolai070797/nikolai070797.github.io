@@ -1,4 +1,4 @@
-import Logo from '../logo/Logo';
+import Logo from '@shared/ui/logo';
 import { useState } from 'react';
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';

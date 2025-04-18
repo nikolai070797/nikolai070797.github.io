@@ -14,7 +14,7 @@ const meta: Meta<typeof Header> = {
 export default meta;
 type Story = StoryObj<typeof Header>;
 
-export const Desctop: Story = {
+export const Desktop: Story = {
   args: {},
 };
 

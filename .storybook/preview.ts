@@ -16,6 +16,7 @@ const preview: Preview = {
       // router: {
       //   basename: "/", // Базовый путь приложения
       // },
+      // hydration: true,
     }),
   },
 };

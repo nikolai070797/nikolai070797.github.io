@@ -1,14 +1,13 @@
 import { fn } from '@storybook/test';
 import { default as Modal } from '@shared/ui/modal';
+import type { Meta, StoryObj } from '@storybook/react';
 
-export default {
-  title: 'Example/Modal',
+const modal: Meta<typeof Modal> = {
   component: Modal,
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   parameters: {
-    // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
+    
   },
   args: {
     open: true,
@@ -18,8 +17,21 @@ export default {
   },
 };
 
-export const Open = {
+export default modal;
+type Story = StoryObj<typeof Modal>;
+
+export const Open: Story = {
   args: {
     open: true,
   },
 };
+
+
+
+
+
+
+
+
+
+

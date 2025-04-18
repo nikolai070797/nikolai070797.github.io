@@ -1,4 +1,4 @@
-import Layout from '@shared/ui/layout/Layout';
+import Layout from '@shared/ui/layout';
 import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { StyledEngineProvider } from '@mui/material/styles';

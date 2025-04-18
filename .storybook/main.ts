@@ -11,12 +11,13 @@ const config: StorybookConfig = {
     '@storybook/addon-interactions',
     '@storybook/preset-scss',
     '@storybook/addon-mdx-gfm',
-    {
-      name: 'storybook-addon-remix-react-router',
-      // options: {
-      //   routerVersion: 7, // Явно указываем версию
-      // },
-    },
+    'storybook-addon-remix-react-router',
+    // {
+    //   name: 'storybook-addon-remix-react-router',
+    //   options: {
+    //     routerVersion: 7, // Явно указываем версию
+    //   },
+    // },
   ],
   framework: {
     // Работает
