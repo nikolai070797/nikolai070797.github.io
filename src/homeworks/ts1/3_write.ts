@@ -1,44 +1,9 @@
 import { v4 as uuid } from 'uuid';
 import { fakerRU as faker } from '@faker-js/faker';
+import { Product } from '@entities/product'
+import { Operation } from '@entities/operation';
 
-export type Category = {
-  id: string;
-  name: string;
-  photo?: string;
-};
 
-export type Product = {
-  id: string;
-  name: string;
-  photo: string;
-  desc?: string;
-  createdAt: string;
-  oldPrice?: number;
-  price: number;
-  category: Category;
-};
-
-export type Cost = {
-  id: string;
-  name: string;
-  desc?: string;
-  createdAt: string;
-  amount: number;
-  category: Category;
-  type: 'Cost';
-};
-
-export type Profit = {
-  id: string;
-  name: string;
-  desc?: string;
-  createdAt: string;
-  amount: number;
-  category: Category;
-  type: 'Profit';
-};
-
-export type Operation = Cost | Profit;
 
 /**
  * Создает случайный продукт (Product).

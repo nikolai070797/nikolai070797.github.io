@@ -1,0 +1,44 @@
+.input {
+  width: 4ch;
+  display: inline-block;
+  text-align: center;
+  vertical-align: top;
+  line-height: 33px;
+  -webkit-appearance: none;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0;
+  border: none;
+//   background: rgba(0, 0, 0, 0);
+//   color: #4e4e4e;
+  font-size: 16px;
+  outline: none;
+}
+
+.count-buttons {
+    width: 165px;
+  min-width: 98px;
+  height: 34px;
+  position: relative;
+//   border: 1px solid #e5e5e5;
+  border: 1px solid;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+//   background-color: #fff;
+}
+
+.count-buttons-wrapper {
+  display: inline-block;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: not-allowed;
+}
+
+.buy {
+  background-color: #fc8507;
+  color: white;
+  border-radius: 12px;
+  font-weight: 700;
+}

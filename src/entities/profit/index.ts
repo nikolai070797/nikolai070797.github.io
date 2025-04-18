@@ -1,0 +1,1 @@
+export type { Profit } from "./model/Profit";
