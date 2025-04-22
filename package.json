@@ -25,6 +25,7 @@
     "@storybook/addon-interactions": "^8.6.12",
     "@storybook/addon-links": "^8.6.12",
     "@storybook/addon-mdx-gfm": "^8.6.12",
+    "@storybook/addon-themes": "^8.6.12",
     "@storybook/blocks": "^8.6.12",
     "@storybook/builder-vite": "^8.6.12",
     "@storybook/preset-scss": "^1.0.3",
@@ -69,6 +70,7 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "dependencies": {
+    "@base-ui-components/react": "^1.0.0-alpha.8",
     "@mui/icons-material": "^7.0.2",
     "@mui/lab": "latest",
     "@mui/material": "^7.0.2",

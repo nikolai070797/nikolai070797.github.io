@@ -11,6 +11,7 @@ const config: StorybookConfig = {
     '@storybook/addon-interactions',
     '@storybook/preset-scss',
     '@storybook/addon-mdx-gfm',
+    '@storybook/addon-themes',
     'storybook-addon-remix-react-router',
     // {
     //   name: 'storybook-addon-remix-react-router',
