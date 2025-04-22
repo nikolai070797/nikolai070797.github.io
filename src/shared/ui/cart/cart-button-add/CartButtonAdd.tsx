@@ -1,10 +1,12 @@
-import { Box, Button, Input, InputBase } from '@mui/material';
+import { Button } from '@mui/material';
 import { useCartStore } from '@shared/store';
 import { useState } from 'react';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import s from './CartButtonAdd.module.scss';
+
+import { NumberField } from '@base-ui-components/react/number-field';
+import React from 'react';
 
 export type CartButtonAddProps = {
   count?: number;
@@ -32,33 +34,26 @@ const CartButtonAdd = ({ count = 0 }: CartButtonAddProps) => {
     setCountProduct(Number.parseInt(e.target.value));
   };
 
+  const id = React.useId();
+
   return (
     <>
       {countProduct == 0 ? (
         <Button variant="contained" className={s.buy} onClick={addHandle}>
-          {/* <AddShoppingCartIcon /> */}
-          Купить
+          В корзину
         </Button>
       ) : (
-        <Box className={s['count-buttons']}>
-          <Box className={s['count-buttons-wrapper']} >
-            <Button title="Добавить товар" onClick={addHandle}>
-              <AddIcon />
-            </Button>
-          </Box>
-          <InputBase
-            inputProps={{ style: { textAlign: 'center' } }}
-            className={s.input}
-            readOnly
-            value={countProduct}
-            onChange={onChangeHandle}
-          />
-          <Box className={s['count-buttons-wrapper']}>
-            <Button title="Удалить товар" onClick={removeHandle}>
+        <NumberField.Root id={id} defaultValue={countProduct} className={s.field}>
+          <NumberField.Group className={s.group}>
+            <NumberField.Decrement className={s.decrement} onClick={removeHandle}>
               <RemoveIcon />
-            </Button>
-          </Box>
-        </Box>
+            </NumberField.Decrement>
+            <NumberField.Input className={s.input} value={countProduct} onChange={onChangeHandle} />
+            <NumberField.Increment className={s.increment} onClick={addHandle}>
+              <AddIcon />
+            </NumberField.Increment>
+          </NumberField.Group>
+        </NumberField.Root>
       )}
     </>
   );

@@ -8,12 +8,12 @@ import { theme } from '@app/styles';
 export default function App() {
   return (
     <React.StrictMode>
-      {/* <StyledEngineProvider injectFirst> */}
+      <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Layout />
         </ThemeProvider>
-      {/* </StyledEngineProvider> */}
+      </StyledEngineProvider>
     </React.StrictMode>
   );
 }

@@ -12,7 +12,6 @@ export type PreviewMiniProps = {
 const PreviewMini = ({ product }: PreviewMiniProps) => {
   return (
     <Box className={s.container}>
-      <Typography variant="h5">PreviewMini</Typography>
       <List>
         <ListItem>
           <Typography variant="h6">{product.name}</Typography>
