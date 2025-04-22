@@ -1,6 +1,6 @@
 import { CartItem } from '@shared/ui/cart';
 import type { Meta, StoryObj } from '@storybook/react';
-import { createRandomProduct } from '@/homeworks/ts1/3_write';
+import { createRandomProduct } from '@homeworks/ts1/3_write';
 import { fn } from '@storybook/test';
 
 const myProduct = createRandomProduct(new Date().toString());

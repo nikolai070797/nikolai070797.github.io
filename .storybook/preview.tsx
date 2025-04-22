@@ -1,12 +1,33 @@
 import type { Preview } from '@storybook/react';
 import { withRouter, reactRouterParameters } from 'storybook-addon-remix-react-router';
-
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
 import { theme } from '../src/app/styles';
 
-import { StyledEngineProvider } from '@mui/material/styles';
+import { StyledEngineProvider, useTheme } from '@mui/material/styles';
 import React from 'react';
+
+
+import { createTheme } from '@mui/material';
+
+
+export const lightTheme = createTheme({
+  palette: {
+    mode: 'light',
+  },
+  cssVariables: {
+    colorSchemeSelector: 'class',
+  },
+});
+
+export const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+  cssVariables: {
+    colorSchemeSelector: 'class',
+  },
+});
 
 
 
@@ -15,7 +36,8 @@ const preview: Preview = {
     withRouter,
     withThemeFromJSXProvider({
       themes: {
-        theme
+        light: lightTheme,
+        dark: darkTheme,
       },
       defaultTheme: 'light',
       Provider: ThemeProvider,
@@ -36,14 +58,12 @@ const preview: Preview = {
         date: /Date$/,
       },
     },
-    reactRouter: reactRouterParameters({
-      // initialEntries: ['/'],
-      // router: {
-      //   basename: "/", // Базовый путь приложения
-      // },
-      // hydration: true,
-    }),
+  },
+
+  initialGlobals: {
+    theme: 'light',
   },
 };
 
 export default preview;
+

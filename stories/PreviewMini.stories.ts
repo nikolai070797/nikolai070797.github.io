@@ -1,5 +1,4 @@
-import { createRandomProduct } from '@/homeworks/ts1/3_write';
-import { ProductPreview } from '@entities/product';
+import { createRandomProduct } from '@homeworks/ts1/3_write';
 import { PreviewMini } from '@shared/ui/product';
 import type { Meta, StoryObj } from '@storybook/react';
 

@@ -1,4 +1,4 @@
-import { createRandomProduct } from '@/homeworks/ts1/3_write';
+import { createRandomProduct } from '@homeworks/ts1/3_write';
 import { ProductPreview } from '@entities/product';
 import { Box, Button, Card, Stack } from '@mui/material';
 import { CartButtonAdd } from '@shared/ui/cart';

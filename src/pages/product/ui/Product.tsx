@@ -1,4 +1,4 @@
-import { createRandomProduct } from '@/homeworks/ts1/3_write';
+import { createRandomProduct } from '@homeworks/ts1/3_write';
 import { Card, Grid } from '@mui/material';
 import { PreviewFull, PreviewMini } from '@shared/ui/product';
 import { MetaFunction } from 'react-router';
