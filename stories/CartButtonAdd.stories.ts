@@ -19,8 +19,7 @@ export const Empty: Story = {
 };
 
 export const WithCount: Story = {
-    args: {
-      count: 1,
-    },
-  };
-  
+  args: {
+    count: 1,
+  },
+};

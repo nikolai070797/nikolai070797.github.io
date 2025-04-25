@@ -21,12 +21,12 @@ export const Default: Story = {
   args: {
     onRemove: fn(),
     product: {
-        id: myProduct.id,
-        name: myProduct.name,
-        price: myProduct.price,
-        oldPrice: myProduct.oldPrice,
-        photo: myProduct.photo,
-        desc: myProduct.desc
-    }
+      id: myProduct.id,
+      name: myProduct.name,
+      price: myProduct.price,
+      oldPrice: myProduct.oldPrice,
+      photo: myProduct.photo,
+      desc: myProduct.desc,
+    },
   },
 };

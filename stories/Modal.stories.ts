@@ -7,7 +7,6 @@ const modal: Meta<typeof Modal> = {
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
-    
   },
   args: {
     open: true,
@@ -25,13 +24,3 @@ export const Open: Story = {
     open: true,
   },
 };
-
-
-
-
-
-
-
-
-
-

@@ -1,9 +1,6 @@
 import { IconButton, InputBase, Paper, Typography } from '@mui/material';
 import { Modal } from '@shared/ui';
-
-// import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-// import DirectionsIcon from '@mui/icons-material/Directions';
 import { useState } from 'react';
 
 const ModalPage = () => {
@@ -20,7 +17,7 @@ const ModalPage = () => {
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setModalText(e.target.value);
-  }
+  };
 
   return (
     <>

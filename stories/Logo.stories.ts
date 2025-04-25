@@ -12,7 +12,6 @@ const logo: Meta<typeof Logo> = {
 export default logo;
 type Story = StoryObj<typeof Logo>;
 
-
 export const Default: Story = {
   args: {},
 };

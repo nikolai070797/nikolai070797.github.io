@@ -7,21 +7,16 @@ const layout: Meta<typeof Layout> = {
   component: Layout,
   tags: ['autodocs'],
   parameters: {
-    layout: 'fullscreen',  
+    layout: 'fullscreen',
     parameters: {
       reactRouter: reactRouterParameters({
-        routing: reactRouterOutlet(<Home/>),
+        routing: reactRouterOutlet(<Home />),
       }),
     },
   },
-
 };
 
 export default layout;
 type Story = StoryObj<typeof Layout>;
 
-export const Default: Story = {
-
-};
-
-
+export const Default: Story = {};

@@ -7,7 +7,6 @@ const meta: Meta<typeof Header> = {
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
-    
   },
 };
 
