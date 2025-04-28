@@ -5,15 +5,17 @@
   "type": "module",
   "scripts": {
     "build": "react-router build",
-    "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
     "test": "jest src",
     "lint": "eslint src --fix",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
     "predeploy": "npm run build",
-    "deploy": "npx gh-pages -d dist"
+    "deploy": "npx gh-pages -d dist",
+    "dev": "react-router dev",
+    "stop-dev": "kill-port 5173",
+    "storybook": "storybook dev -p 6006 --no-open",
+    "stop-storybook": "kill-port 6006",
+    "build-storybook": "storybook build"
   },
   "devDependencies": {
     "@emotion/styled": "^11.14.0",
@@ -66,7 +68,8 @@
     "vite": "^6.2.6",
     "vite-plugin-react-router-generator": "^1.0.6",
     "vite-plugin-svgr": "^4.3.0",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "kill-port": "^2.0.1"
   },
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-alpha.8",

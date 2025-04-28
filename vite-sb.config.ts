@@ -3,4 +3,5 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [tsconfigPaths()],
+  server: { open: false}
 });
