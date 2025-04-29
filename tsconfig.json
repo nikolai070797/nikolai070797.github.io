@@ -38,7 +38,7 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
 		"useDefineForClassFields": true,
-		"noUnusedLocals": true,
+		"noUnusedLocals": false,
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
   }

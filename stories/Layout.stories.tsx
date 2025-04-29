@@ -1,7 +1,7 @@
 import Home from '@pages/home';
-import { default as Layout } from '@shared/ui/layout';
+import { default as Layout } from '@widgets/Layout';
 import type { Meta, StoryObj } from '@storybook/react';
-import { withRouter, reactRouterParameters, reactRouterOutlet } from 'storybook-addon-remix-react-router';
+import { reactRouterParameters, reactRouterOutlet } from 'storybook-addon-remix-react-router';
 
 const layout: Meta<typeof Layout> = {
   component: Layout,

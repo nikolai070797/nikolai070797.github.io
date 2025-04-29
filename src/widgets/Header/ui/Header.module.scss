@@ -1,0 +1,56 @@
+.headerContainer {
+  flex-grow: 1;
+}
+
+.appBar {
+  position: fixed;
+  width: 100%;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  vertical-align: bottom;
+}
+
+.title {
+  margin-left: 16px;
+  display: none;
+
+  @media (min-width: 372px) {
+    display: block;
+  }
+}
+
+.navContainer {
+  display: none;
+  flex-grow: 1;
+  justify-content: flex-start;
+
+  @media (min-width: 900px) {
+    display: flex;
+  }
+}
+
+.actionsContainer {
+  display: none;
+
+  @media (min-width: 900px) {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.mobileMenuButton {
+  display: flex;
+
+  @media (min-width: 900px) {
+    display: none;
+  }
+}
