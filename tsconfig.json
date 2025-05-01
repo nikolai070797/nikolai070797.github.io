@@ -1,23 +1,45 @@
 {
-	"compilerOptions": {
-		"outDir": "./dist",
-	  "baseUrl": ".",
-	  "paths": {
-			"src/*": ["src/*"]
-	  },
-	  "lib": ["dom", "dom.iterable", "esnext"],
-	  "allowJs": true,
-	  "allowSyntheticDefaultImports": true,
-	  "skipLibCheck": true,
-	  "esModuleInterop": true,
-	  "target": "ES2015",
-	  "module": "esnext",
-	  "sourceMap": true,
-	  "noImplicitAny": true,
-	  "downlevelIteration": true,
-	  "moduleResolution": "node",
-	  "resolveJsonModule": true,
-	  "jsx": "react"
-	}
+  "include": [
+    "**/*",
+    ".react-router/types/**/*",
+    "**/*.ts", "**/*.tsx", 
+    "src/custom.d.ts"
+  ],
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "types": ["node", "vite/client"],
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "rootDirs": [".", "./.react-router/types"],
+    "baseUrl": ".",
+    "paths": {
+      "@public/*": ["./public/*"],
+      "@app/*": ["./src/app/*"],
+			"@entities/*": ["./src/entities/*"],
+			"@features/*": ["./src/features/*"],
+			"@pages/*": ["./src/pages/*"],
+			"@shared/*": ["./src/shared/*"],
+			"@widgets/*": ["./src/widgets/*"],
+			"@homeworks/*": ["./src/homeworks/*"],
+
+			"@/*": ["./src/*"],
+
+    },
+    "esModuleInterop": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": false,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "isolatedModules": true,
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+		"useDefineForClassFields": true,
+		"noUnusedLocals": false,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+  }
 }
-  

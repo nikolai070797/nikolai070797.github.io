@@ -1,0 +1,50 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Client (Chrome)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "https://localhost:5173",
+      "webRoot": "${workspaceFolder}",
+      "preLaunchTask": "Start Client", // Запускает Vite перед отладкой
+      "postDebugTask": "Stop Client", // Остановка
+      "serverReadyAction": {
+        "pattern": "Local:\\s+(https://localhost:\\d+)", // Ожидает URL из лога
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
+      },
+      "timeout": 30000 // Увеличенный таймаут
+    },
+    {
+      "name": "Launch Storybook (Chrome)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:6006",
+      "webRoot": "${workspaceFolder}",
+      "preLaunchTask": "Start Storybook", // Запускает Storybook перед отладкой
+      "postDebugTask": "Stop Storybook", // Остановка
+      "serverReadyAction": {
+        "pattern": "Storybook.*started",
+        "action": "debugWithChrome"
+      }
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "Attach Client (Chrome)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "https://localhost:5173",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "name": "Attach Storybook (Chrome)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:6006", // URL Storybook
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
+}

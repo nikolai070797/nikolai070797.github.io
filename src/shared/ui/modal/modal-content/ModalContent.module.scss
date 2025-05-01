@@ -1,0 +1,8 @@
+@import '/src/app/styles/common';
+
+.content {
+    // @include theme(background-color, mainBg);
+    background-color: white;
+    width: 500px;
+    height: 200px;
+}

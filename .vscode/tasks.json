@@ -1,0 +1,72 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Storybook",
+      "type": "npm",
+      "script": "storybook",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "storybook",
+        "pattern": [
+          {
+            "regexp": "^.*$", // Игнорируем ошибки (Storybook не завершается)
+            "file": 1,
+            "line": 1,
+            "column": 1,
+            "message": 1
+          }
+        ],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*Storybook.*",
+          "endsPattern": ".*Storybook.*started.*" // Сообщение о запуске
+        }
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "Stop Storybook",
+      "type": "npm",
+      "script": "stop-storybook",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "Start Client",
+      "type": "npm",
+      "script": "dev", // Ваш скрипт для запуска Vite
+      "isBackground": true, // Задача фоновая (сервер не завершается)
+      "problemMatcher": {
+        "pattern": [
+          {
+            "regexp": "^.*$", // Игнорируем ошибки
+            "file": 1,
+            "line": 1,
+            "column": 1,
+            "message": 1
+          }
+        ],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "dev",
+          "endsPattern": ".*Local:\\s+https://localhost:5173.*" // Сообщение о запуске
+        }
+      },
+      "options": {
+        "cwd": "${workspaceFolder}" // Папка с клиентом
+      }
+    },
+    {
+        "label": "Stop Client",
+        "type": "npm",
+        "script": "stop-dev",
+        "options": {
+          "cwd": "${workspaceFolder}"
+        }
+      },
+  ]
+}
