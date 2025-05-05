@@ -5,7 +5,8 @@
     "theme": { "title": "Theme", "type": { "system": "System", "light": "Light", "dark": "Dark" } },
     "modal": { "placeholder": "This text will be displayed in a modal window", "header": "Header" },
     "localization": { "title": "Language" },
-    "CartButtonAdd": { "textButton": "Buy" }
+    "CartButtonAdd": { "textButton": "Buy" },
+    "Footer": { "text": "Footer" }
 
   },
   "pages": {

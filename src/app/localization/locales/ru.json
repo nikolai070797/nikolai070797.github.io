@@ -5,7 +5,8 @@
     "theme": { "title": "Тема", "type": { "system": "Система", "light": "Светлая", "dark": "Тёмная" } },
     "modal": { "placeholder": "Этот текст будет отображаться в модальном окне", "header": "Заголовок" },
     "localization": { "title": "Язык" },
-    "CartButtonAdd": { "textButton": "В корзину" }
+    "CartButtonAdd": { "textButton": "В корзину" },
+    "Footer": { "text": "Footer" }
 
   },
   "pages": {
