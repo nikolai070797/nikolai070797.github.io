@@ -78,6 +78,8 @@
     "@mui/material": "^7.0.2",
     "@react-router/node": "^7.5.0",
     "@react-router/serve": "^7.5.0",
+    "i18next-browser-languagedetector": "^8.1.0",
+    "i18next-resources-to-backend": "^1.2.1",
     "isbot": "^5.1.17",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

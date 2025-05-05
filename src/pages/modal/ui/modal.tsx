@@ -2,8 +2,10 @@ import { IconButton, InputBase, Paper, Typography } from '@mui/material';
 import { Modal } from '@shared/ui';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ModalPage = () => {
+  const { t } = useTranslation('translation', { keyPrefix: 'components.modal' });
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [modalText, setModalText] = useState<string>('');
 
@@ -25,14 +27,14 @@ const ModalPage = () => {
         <InputBase
           onChange={inputChangeHandler}
           sx={{ ml: 1, flex: 1 }}
-          placeholder="Этот текст будет отображаться в модальном окне"
+          placeholder={t("placeholder")}
         />
         <IconButton onClick={openModalHandler} type="button" sx={{ p: '10px' }}>
           <SearchIcon />
         </IconButton>
       </Paper>
 
-      <Modal open={isOpenModal} onClose={closeModalHandler} title={<Typography>Заголовок</Typography>}>
+      <Modal open={isOpenModal} onClose={closeModalHandler} title={<Typography>{t("header")}</Typography>}>
         <Typography>{modalText}</Typography>
       </Modal>
     </>

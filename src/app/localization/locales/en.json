@@ -1,0 +1,19 @@
+{
+  "app": { "title": "Nikolay Tartyshnyi" },
+  "nav": { "logout": "Log out" },
+  "components": {
+    "theme": { "title": "Theme", "type": { "system": "System", "light": "Light", "dark": "Dark" } },
+    "modal": { "placeholder": "This text will be displayed in a modal window", "header": "Header" },
+    "localization": { "title": "Language" },
+    "CartButtonAdd": { "textButton": "Buy" }
+
+  },
+  "pages": {
+    "home": { "title": "Home" },
+    "modal": { "title": "Modal" },
+    "cart": { "title": "Cart", "showMore": "Show more" },
+    "product": { "title": "Product" },
+    "profile": { "title": "Profile" },
+    "404": { "title": "Home", "text": "Page not found", "urlBack": "Back to home page" }
+  }
+}
