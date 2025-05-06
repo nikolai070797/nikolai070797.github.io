@@ -4,6 +4,7 @@ import { Box, Button, Card, Stack } from '@mui/material';
 import { CartButtonAdd } from '@shared/ui/cart';
 import CartItem from '@shared/ui/cart/cart-item/CartItem';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 let arrayProducts: ProductPreview[] = [];
 for (let i = 1; i <= 3; i++) {
@@ -11,6 +12,7 @@ for (let i = 1; i <= 3; i++) {
 }
 
 const CartPage = () => {
+  const { t } = useTranslation('translation', { keyPrefix: 'pages.cart' });
   const [products, setProducts] = useState<ProductPreview[]>(arrayProducts);
 
   const generateRandomProducts = (count: number): void => {
@@ -31,12 +33,12 @@ const CartPage = () => {
       <hr/>
       <Stack gap={1}>
         {products.map((product) => (
-          <Card>
-            <CartItem key={product.id} onRemove={() => {handlerRemoveProduct(product.id)}} product={product} />
+          <Card key={product.id} >
+            <CartItem onRemove={() => {handlerRemoveProduct(product.id)}} product={product} />
           </Card>
         ))}
       </Stack>
-      <Button onClick={() => generateRandomProducts(3)}>Показать еще</Button>
+      <Button onClick={() => generateRandomProducts(3)}>{t("showMore")}</Button>
     </>
   );
 };

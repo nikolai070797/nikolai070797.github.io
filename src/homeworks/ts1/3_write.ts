@@ -1,15 +1,23 @@
 import { v4 as uuid } from 'uuid';
-import { fakerRU as faker } from '@faker-js/faker';
+// import { fakerRU as faker } from '@faker-js/faker';
+import { fakerRU, fakerEN } from '@faker-js/faker';
 import { Product } from '@entities/product'
 import { Operation } from '@entities/operation';
+import { useTranslation } from 'react-i18next';
+import { Languages } from '@app/localization/config';
+import i18n from '@app/localization/config';
 
-
+export const getFaker = () => {
+  return i18n.language == Languages.en ? fakerEN : fakerRU;
+}
 
 /**
  * Создает случайный продукт (Product).
  * Принимает дату создания (строка)
  * */
 export const createRandomProduct = (createdAt: string): Product => {
+  const faker = getFaker();
+
   return {
     id: uuid(),
     name: faker.commerce.productName(),
@@ -31,6 +39,8 @@ export const createRandomProduct = (createdAt: string): Product => {
  * Принимает дату создания (строка)
  * */
 export const createRandomOperation = (createdAt: string): Operation => {
+  const faker = getFaker();
+
   const type = faker.helpers.arrayElement(['Cost', 'Profit']) as 'Cost' | 'Profit';
 
   return {

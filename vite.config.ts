@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import fs from 'fs';
 import { env } from 'process';
-import path from 'path';
+import path, { resolve } from 'path';
 import child_process from 'child_process';
 
 const baseFolder =
@@ -39,6 +39,28 @@ export default defineConfig({
     https: {
       key: fs.readFileSync(keyFilePath),
       cert: fs.readFileSync(certFilePath),
+    },
+  },
+  resolve: {
+    alias: {
+      '@locales': resolve(__dirname, './src/app/localization/locales'),
+    },
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+      },
+      output: {
+        assetFileNames: (assetInfo) => {
+          const { name } = assetInfo;
+          if (name?.endsWith('.json') && name.includes('locales')) {
+            return 'locales/[name][extname]';
+          }
+          // Добавляем обработку других файлов
+          return 'assets/[name]-[hash][extname]';
+        },
+      },
     },
   },
 });

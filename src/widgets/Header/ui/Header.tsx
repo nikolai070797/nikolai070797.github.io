@@ -9,26 +9,32 @@ import MobileMenu from './MobileMenu';
 import NavLink from '@shared/ui/NavLink';
 import s from './Header.module.scss';
 import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import ToggleLocalization from '@shared/ui/ToggleLocalization/ToggleLocalization';
+
 
 const Header = () => {
+  const { t } = useTranslation();
+
   return (
     <Box className={s.headerContainer}>
       <AppBar className={s.appBar}>
         <Toolbar className={s.toolbar}>
           <NavLink to="/" icon={<Logo />} className={s.logoContainer}>
             <Typography variant="h6" className={s.title}>
-              Николай Тартышный
+              {t("app.title")}
             </Typography>
           </NavLink>
 
           <Box className={s.navContainer}>
-            <NavLink to="/modal">Модальное окно</NavLink>
-            <NavLink to="/cart">Корзина</NavLink>
-            <NavLink to="/product">Продукт</NavLink>
+            <NavLink to="/modal">{t("pages.modal.title")}</NavLink>
+            <NavLink to="/cart">{t("pages.cart.title")}</NavLink>
+            <NavLink to="/product">{t("pages.product.title")}</NavLink>
           </Box>
 
           <Box className={s.actionsContainer}>
             <ToggleTheme />
+            <ToggleLocalization/>
             <CartButton />
             <DesktopMenu />
           </Box>

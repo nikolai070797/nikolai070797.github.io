@@ -4,8 +4,10 @@ import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import IconButton from '@mui/material/IconButton';
 import { MouseEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const DesktopMenu = () => {
+  const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const isMenuOpen = Boolean(anchorEl);
 
@@ -18,6 +20,7 @@ const DesktopMenu = () => {
   };
 
   return (
+    
     <>
       <IconButton size="large" edge="end" color="inherit" aria-label="account" onClick={handleProfileMenuOpen}>
         <AccountCircle />
@@ -31,8 +34,8 @@ const DesktopMenu = () => {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         keepMounted
       >
-        <MenuItem onClick={handleMenuClose}>Профиль</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Выйти</MenuItem>
+        <MenuItem onClick={handleMenuClose}>{t("pages.profile.title")}</MenuItem>
+        <MenuItem onClick={handleMenuClose}>{t("nav.logout")}</MenuItem>
       </Menu>
     </>
   );
