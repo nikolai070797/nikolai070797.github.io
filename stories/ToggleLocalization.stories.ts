@@ -1,4 +1,4 @@
-import ToggleLocalization from '@shared/ui/ToggleLocalization/ToggleLocalization';
+import ToggleLocalization from '@shared/ui/ToggleLocalization';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const toggleLocalization: Meta<typeof ToggleLocalization> = {

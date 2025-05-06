@@ -13,9 +13,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 
-export type ToggleLocalizationProps = {};
-
-const ToggleLocalization = (props: ToggleLocalizationProps) => {
+const ToggleLocalization = () => {
   const { i18n, t } = useTranslation('translation', { keyPrefix: 'components.localization' });
   const handleLanguageChange = (lang: string) => {
     i18n.changeLanguage(lang);
