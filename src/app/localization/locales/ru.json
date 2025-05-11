@@ -1,0 +1,21 @@
+{
+  "app": { "title": "Николай Тартышный" },
+  "nav": { "logout": "Выйти" },
+  "components": {
+    "theme": { "title": "Тема", "type": { "system": "Система", "light": "Светлая", "dark": "Тёмная" } },
+    "modal": { "placeholder": "Этот текст будет отображаться в модальном окне", "header": "Заголовок" },
+    "localization": { "title": "Язык" },
+    "CartButtonAdd": { "textButton": "В корзину" },
+    "Footer": { "text": "Footer" }
+
+  },
+  "pages": {
+    "home": { "title": "Домашняя страница" },
+    "modal": { "title": "Модальное окно" },
+    "cart": { "title": "Корзина", "showMore": "Показать ещё" },
+    "product": { "title": "Продукт" },
+    "profile": { "title": "Профиль" },
+    "404": { "title": "Домашняя страница", "text": "Страница не найдена", "urlBack": "Вернуться на главную" }
+  }
+}
+

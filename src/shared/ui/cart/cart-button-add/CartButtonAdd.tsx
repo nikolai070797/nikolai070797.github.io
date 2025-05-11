@@ -7,6 +7,7 @@ import s from './CartButtonAdd.module.scss';
 
 import { NumberField } from '@base-ui-components/react/number-field';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export type CartButtonAddProps = {
   count?: number;
@@ -14,6 +15,7 @@ export type CartButtonAddProps = {
 };
 
 const CartButtonAdd = ({ count = 0 }: CartButtonAddProps) => {
+  const { t } = useTranslation('translation', { keyPrefix: 'components.CartButtonAdd' });
   const [countProduct, setCountProduct] = useState(count);
   const cartStore = useCartStore();
 
@@ -40,7 +42,7 @@ const CartButtonAdd = ({ count = 0 }: CartButtonAddProps) => {
     <>
       {countProduct == 0 ? (
         <Button variant="contained" className={s.buy} onClick={addHandle}>
-          В корзину
+          {t("textButton")}
         </Button>
       ) : (
         <NumberField.Root id={id} defaultValue={countProduct} className={s.field}>

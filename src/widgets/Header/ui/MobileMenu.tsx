@@ -6,8 +6,10 @@ import NavLink from '@shared/ui/NavLink';
 import { MouseEvent } from 'react';
 import { CartIcon } from '@shared/ui/cart';
 import { AccountCircle } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 const MobileMenu = () => {
+  const { t } = useTranslation();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<HTMLElement | null>(null);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -33,13 +35,14 @@ const MobileMenu = () => {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         keepMounted
       >
-        <NavLink to="/modal">Модальное окно</NavLink>
+        <NavLink to="/modal">{t("pages.modal.title")}</NavLink>
         <NavLink to="/cart" icon={<CartIcon />}>
-          Корзина
+        {t("pages.cart.title")}
         </NavLink>
         <NavLink to="/" icon={<AccountCircle />}>
-          Профиль
+          {t("pages.profile.title")}
         </NavLink>
+        <NavLink to="/">{t("nav.logout")}</NavLink>
       </Menu>
     </>
   );

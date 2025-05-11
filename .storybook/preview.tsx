@@ -3,6 +3,7 @@ import { withRouter, reactRouterParameters } from 'storybook-addon-remix-react-r
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
 import { theme } from '../src/app/styles';
+import { LocalizationInitiator } from '../src/app/localization/LocalizationInitiator';
 
 import { StyledEngineProvider, useTheme } from '@mui/material/styles';
 import React from 'react';
@@ -45,6 +46,7 @@ const preview: Preview = {
     }),
     (Story) => (
       <StyledEngineProvider injectFirst>
+        <LocalizationInitiator/>
         {Story()}
       </StyledEngineProvider>
     ),

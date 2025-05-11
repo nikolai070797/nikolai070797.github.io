@@ -10,9 +10,14 @@ import {
   useColorScheme,
 } from '@mui/material';
 import { useState } from 'react';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import { useTranslation } from 'react-i18next';
+
 
 const ToggleTheme = () => {
-  const { mode, setMode } = useColorScheme();
+  const { t } = useTranslation('translation', { keyPrefix: 'components.theme' });
+  const { mode, setMode, colorScheme } = useColorScheme();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -35,16 +40,16 @@ const ToggleTheme = () => {
         onClose={handleClose}
       >
       <FormControl sx={{ p: 1 }}>
-        <FormLabel>Тема</FormLabel>
+        <FormLabel>{t("title")}</FormLabel>
         <RadioGroup
           name="theme-toggle"
           row
           value={mode}
           onChange={(event) => setMode(event.target.value as 'system' | 'light' | 'dark')}
         >
-          <FormControlLabel value="system" control={<Radio />} label="Система" />
-          <FormControlLabel value="light" control={<Radio />} label="Светлая" />
-          <FormControlLabel value="dark" control={<Radio />} label="Тёмная" />
+          <FormControlLabel value="system" control={<Radio />} label={t("type.system")} />
+          <FormControlLabel value="light" control={<Radio />} label={t("type.light")} />
+          <FormControlLabel value="dark" control={<Radio />} label={t("type.dark")} />
         </RadioGroup>
       </FormControl>
     </Menu>
@@ -57,7 +62,7 @@ const ToggleTheme = () => {
         onClick={handleClick}
         color="inherit"
       >
-        <DarkMode />
+        {colorScheme == "light" ? <Brightness7Icon /> : <Brightness4Icon />}
       </IconButton>
 
       {renderMenu}

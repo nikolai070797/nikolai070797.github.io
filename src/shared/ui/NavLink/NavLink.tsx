@@ -15,7 +15,7 @@ const NavLink = ({ className, to, children, icon }: NavLinkProps) => (
   <Link className={className} component={RouterLink} to={to} underline="none" color="inherit">
     <MenuItem>
       {icon && <span style={{ marginRight: 8 }}>{icon}</span>}
-      <Typography sx={{ textAlign: 'center' }}>{children}</Typography>
+      {children}
     </MenuItem>
   </Link>
 );
