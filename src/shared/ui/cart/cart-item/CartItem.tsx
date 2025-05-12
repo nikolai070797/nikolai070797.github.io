@@ -17,13 +17,13 @@ const CartItem = ({ product, onRemove }: CartItemProps) => {
       <Box width={1} pr={2} sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Box>
           <Typography variant="h6">{product.name}</Typography>
-          <CartButtonAdd count={1}/>
+          <CartButtonAdd count={1} />
         </Box>
         <Box>
           <Box className={s.buttons}>
-              <IconButton aria-label="delete">
-                <DeleteIcon onClick={onRemove} />
-              </IconButton>
+            <IconButton aria-label="delete">
+              <DeleteIcon onClick={onRemove} />
+            </IconButton>
           </Box>
           <Price price={product.price} oldPrice={product.oldPrice} />
         </Box>
