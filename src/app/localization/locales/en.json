@@ -6,8 +6,8 @@
     "modal": { "placeholder": "This text will be displayed in a modal window", "header": "Header" },
     "localization": { "title": "Language" },
     "CartButtonAdd": { "textButton": "Buy" },
-    "Footer": { "text": "Footer" }
-
+    "Footer": { "text": "Footer" },
+    "product": { "noMoreProducts": "No More Products" }
   },
   "pages": {
     "home": { "title": "Home" },
@@ -16,5 +16,8 @@
     "product": { "title": "Product" },
     "profile": { "title": "Profile" },
     "404": { "title": "Home", "text": "Page not found", "urlBack": "Back to home page" }
+  },
+  "errors": {
+    "LoadingProducts": "Error loading products"
   }
 }

@@ -6,8 +6,8 @@
     "modal": { "placeholder": "Этот текст будет отображаться в модальном окне", "header": "Заголовок" },
     "localization": { "title": "Язык" },
     "CartButtonAdd": { "textButton": "В корзину" },
-    "Footer": { "text": "Footer" }
-
+    "Footer": { "text": "Footer" },
+    "product": { "noMoreProducts": "Нет больше продуктов" }
   },
   "pages": {
     "home": { "title": "Домашняя страница" },
@@ -16,6 +16,9 @@
     "product": { "title": "Продукт" },
     "profile": { "title": "Профиль" },
     "404": { "title": "Домашняя страница", "text": "Страница не найдена", "urlBack": "Вернуться на главную" }
+  },
+  "errors": {
+    "LoadingProducts": "Ошибка загрузки товаров"
   }
 }
 
