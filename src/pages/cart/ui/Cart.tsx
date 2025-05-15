@@ -45,14 +45,15 @@ const CartPage = () => {
     setProducts((prev) => prev.filter((p) => p.id !== productId));
   };
 
-  return (
+  return (<>
+    <Button onClick={loadMoreProducts}>{t('pages.cart.showMore')}</Button>
     <Stack spacing={2}>
       <ProductList products={products} onRemove={handleRemoveProduct} onLoadMore={loadMoreProducts} />
 
       {/* Кнопка или индикатор загрузки */}
       {isLoading && <CircularProgress />}
       {!hasMore && <div>{t('components.product.noMoreProducts')}</div>}
-    </Stack>
+    </Stack></>
   );
 };
 
