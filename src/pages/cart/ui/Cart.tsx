@@ -6,13 +6,13 @@ import { ProductPreview } from '@entities/product';
 import { Button, Stack, CircularProgress } from '@mui/material';
 
 const CartPage = () => {
-  const { t } = useTranslation('translation', { keyPrefix: 'pages.cart' });
+  const { t } = useTranslation('translation');
   const [products, setProducts] = useState<ProductPreview[]>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Инициальная загрузка
+  // Начальная загрузка
   useEffect(() => {
     const loadInitialProducts = async () => {
       const initialProducts = await fetchProducts(1);
@@ -35,7 +35,7 @@ const CartPage = () => {
         setPage((prev) => prev + 1);
       }
     } catch (error) {
-      console.error('Ошибка загрузки товаров:', error);
+      console.error(`${t("errors.LoadingProducts")}:`, error);
     } finally {
       setIsLoading(false);
     }
@@ -51,7 +51,7 @@ const CartPage = () => {
 
       {/* Кнопка или индикатор загрузки */}
       {isLoading && <CircularProgress />}
-      {!hasMore && <div>{t('noMoreProducts')}</div>}
+      {!hasMore && <div>{t('components.product.noMoreProducts')}</div>}
     </Stack>
   );
 };
