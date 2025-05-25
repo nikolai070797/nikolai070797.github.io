@@ -1,36 +1,74 @@
-// import { Product } from '@entities/product';
+import { Product } from '@entities/product';
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+
+type CartItem = {
+  product: Product;
+  quantity: number;
+};
 
 export type CartStoreProps = {
-  productsId: string[];
-  addProduct: (productId: string) => void;
+  cartItems: CartItem[];
+  addProduct: (product: Product) => void;
+  decrementProduct: (productId: string) => void;
   removeProduct: (productId: string) => void;
   clear: () => void;
 };
 
-export const useCartStore = create<CartStoreProps>((set) => ({
-  productsId: [],
+export const useCartStore = create<CartStoreProps>()(
+  persist(
+    (set) => ({
+      cartItems: [],
 
-  // Добавляем товар (можно добавить логику учета количества одинаковых товаров)
-  addProduct: (productId) =>
-    set((state) => ({
-      productsId: [...state.productsId, productId],
-    })),
+      addProduct: (product) =>
+        set((state) => {
+          const existingItem = state.cartItems.find((item) => item.product.id === product.id);
+          if (existingItem) {
+            return {
+              cartItems: state.cartItems.map((item) =>
+                item.product.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+              ),
+            };
+          }
+          return {
+            cartItems: [...state.cartItems, { product, quantity: 1 }],
+          };
+        }),
 
-  // Удаляем товар по ID
-  // removeProduct: (productId) => set((state) => ({
-  removeProduct: () =>
-    set((state) => ({
-      // products: state.products.filter(p => p.id !== productId)
-      productsId: state.productsId.slice(0, -1),
-    })),
+      decrementProduct: (productId) =>
+        set((state) => {
+          const existingItem = state.cartItems.find((item) => item.product.id === productId);
+          if (existingItem) {
+            if (existingItem.quantity > 1) {
+              return {
+                cartItems: state.cartItems.map((item) =>
+                  item.product.id === productId ? { ...item, quantity: item.quantity - 1 } : item
+                ),
+              };
+            }
+            return {
+              cartItems: state.cartItems.filter((item) => item.product.id !== productId),
+            };
+          }
+          return state;
+        }),
 
-  // Очищаем корзину
-  clear: () => set({ productsId: [] }),
-}));
+      removeProduct: (productId) =>
+        set((state) => ({
+          cartItems: state.cartItems.filter((item) => item.product.id !== productId),
+        })),
 
-// Хук для получения количества товаров
+      clear: () => set({ cartItems: [] }),
+    }),
+    {
+      name: 'cart-store', // Имя хранилища
+      version: 1, // Версия хранилища
+    }
+  )
+);
+
+// Хук для получения общего количества товаров в корзине
 export const useCartCount = () => {
-  const { productsId } = useCartStore();
-  return productsId.length;
+  const { cartItems } = useCartStore();
+  return cartItems.reduce((total, item) => total + item.quantity, 0);
 };

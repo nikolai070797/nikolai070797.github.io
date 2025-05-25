@@ -1,4 +1,4 @@
-import { ProductPreview } from '@entities/product';
+import { Product, ProductPreview } from '@entities/product';
 import { Box, List, ListItem, Stack, Typography } from '@mui/material';
 import s from './PreviewMini.module.scss';
 import cn from 'clsx';
@@ -32,7 +32,7 @@ const PreviewMini = ({ product }: PreviewMiniProps) => {
         <ListItem>
           <Stack width={1} direction="row" sx={{ justifyContent: 'space-between' }}>
             <Price price={product.price} oldPrice={product.oldPrice} />
-            <CartButtonAdd />
+            <CartButtonAdd product={product as Product}/>
           </Stack>
         </ListItem>
       </List>

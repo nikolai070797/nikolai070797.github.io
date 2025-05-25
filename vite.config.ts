@@ -10,7 +10,7 @@ import child_process from 'child_process';
 const baseFolder =
   env.APPDATA !== undefined && env.APPDATA !== '' ? `${env.APPDATA}/ASP.NET/https` : `${env.HOME}/.aspnet/https`;
 
-const certificateName = 'Logbook.client';
+const certificateName = 'OTUS.client';
 const certFilePath = path.join(baseFolder, `${certificateName}.pem`);
 const keyFilePath = path.join(baseFolder, `${certificateName}.key`);
 

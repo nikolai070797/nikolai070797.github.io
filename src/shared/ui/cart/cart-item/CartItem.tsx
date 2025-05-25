@@ -1,4 +1,4 @@
-import { ProductPreview } from '@entities/product';
+import { Product, ProductPreview } from '@entities/product';
 import { Box, IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import s from './CartItem.module.scss';
@@ -17,7 +17,7 @@ const CartItem = ({ product, onRemove }: CartItemProps) => {
       <Box width={1} pr={2} sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Box>
           <Typography variant="h6">{product.name}</Typography>
-          <CartButtonAdd count={1} />
+          <CartButtonAdd product={product as Product} />
         </Box>
         <Box>
           <Box className={s.buttons}>

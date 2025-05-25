@@ -34,7 +34,7 @@ function PreviewFull({ product }: PreviewFullProps) {
         <ListItem>
           <Box width={1} sx={{ display: 'inline-flex', justifyContent: 'space-between' }}>
             <Price price={product.price} oldPrice={product.oldPrice} />
-            <CartButtonAdd />
+            <CartButtonAdd product={product}/>
           </Box>
         </ListItem>
       </List>

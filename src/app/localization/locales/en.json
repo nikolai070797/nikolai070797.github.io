@@ -12,7 +12,7 @@
   "pages": {
     "home": { "title": "Home" },
     "modal": { "title": "Modal" },
-    "cart": { "title": "Cart", "showMore": "Show more" },
+    "cart": { "title": "Cart", "empty": "Cart is empty", "clear": "Clear Cart",  "showMore": "Show more" },
     "product": { "title": "Product" },
     "profile": { "title": "Profile" },
     "404": { "title": "Home", "text": "Page not found", "urlBack": "Back to home page" }
