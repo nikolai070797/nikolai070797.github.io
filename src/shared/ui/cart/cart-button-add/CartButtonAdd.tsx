@@ -1,51 +1,68 @@
 import { Button } from '@mui/material';
 import { useCartStore } from '@shared/store';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import s from './CartButtonAdd.module.scss';
-
 import { NumberField } from '@base-ui-components/react/number-field';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Product } from '@entities/product';
 
 export type CartButtonAddProps = {
-  count?: number;
-  // productId: number;
+  product: Product;
 };
 
-const CartButtonAdd = ({ count = 0 }: CartButtonAddProps) => {
+const CartButtonAdd = ({ product }: CartButtonAddProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'components.CartButtonAdd' });
-  const [countProduct, setCountProduct] = useState(count);
   const cartStore = useCartStore();
+  const [countProduct, setCountProduct] = useState(0);
 
-  const modifyValue = (delta: number) => {
-    setCountProduct((prev) => {
-      return (prev += delta);
-    });
-  };
+  // Синхронизация локального состояния с корзиной
+  useEffect(() => {
+    const cartItem = cartStore.cartItems.find((item) => item.product.id === product.id);
+    setCountProduct(cartItem ? cartItem.quantity : 0);
+  }, [cartStore.cartItems, product.id]);
+
   const addHandle = () => {
-    modifyValue(1);
-    cartStore.addProduct('1');
+    cartStore.addProduct(product);
   };
+
   const removeHandle = () => {
-    modifyValue(-1);
-    cartStore.removeProduct('1');
+    cartStore.decrementProduct(product.id);
   };
+
   const onChangeHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCountProduct(Number.parseInt(e.target.value));
+    const newCount = Number.parseInt(e.target.value);
+    if (!isNaN(newCount) && newCount >= 0) {
+      const currentCount = cartStore.cartItems.find((item) => item.product.id === product.id)?.quantity || 0;
+      const difference = newCount - currentCount;
+
+      if (difference > 0) {
+        // Увеличиваем количество в корзине
+        for (let i = 0; i < difference; i++) {
+          cartStore.addProduct(product);
+        }
+      } else if (difference < 0) {
+        // Уменьшаем количество в корзине
+        for (let i = 0; i < -difference; i++) {
+          cartStore.decrementProduct(product.id);
+        }
+      }
+      setCountProduct(newCount);
+    }
   };
 
   const id = React.useId();
 
   return (
     <>
-      {countProduct == 0 ? (
+      {countProduct === 0 ? (
         <Button variant="contained" className={s.buy} onClick={addHandle}>
-          {t("textButton")}
+          {t('textButton')}
         </Button>
       ) : (
-        <NumberField.Root id={id} defaultValue={countProduct} className={s.field}>
+        <NumberField.Root id={id} value={countProduct} className={s.field}>
           <NumberField.Group className={s.group}>
             <NumberField.Decrement className={s.decrement} onClick={removeHandle}>
               <RemoveIcon />
