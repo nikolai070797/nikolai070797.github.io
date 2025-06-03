@@ -1,15 +1,39 @@
-import { ProductPreview } from '@entities/product';
+import { Product, ProductPreview } from '@entities/product';
 import { createRandomProduct } from '@homeworks/ts1/3_write';
+import productsMock from '@shared/api/mock/products.json';
 
-export const fetchProducts = async (page: number): Promise<ProductPreview[]> => {
-  // Имитация задержки сети (1 секунда)
+// Получить товар по ID (временная реализация)
+export const fetchProductsById = async (productsId: string[]): Promise<Product[] | undefined> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const products: ProductPreview[] = [];
-      for (let i = 1; i <= 3; i++) {
-        products.push(createRandomProduct(`${new Date().toString()}-${page}-${i}`));
-      }
-      resolve(products);
-    }, 1000);
+      const product = productsMock.filter((p) => productsId.includes(p.id));
+      resolve(product);
+    }, 0);
   });
 };
+
+export const fetchProducts = async (page: number, count: number): Promise<Product[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const products: Product[] = [];
+      for (let i = 1; i <= count; i++) {
+        const randomIndex = Math.floor(Math.random() * productsMock.length);
+        products.push(productsMock[randomIndex]);
+      }
+      resolve(products);
+    }, 0);
+  });
+};
+
+// export const fetchProducts = async (page: number, count: number): Promise<Product[]> => {
+//   // Имитация задержки сети (1 секунда)
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       const products: Product[] = [];
+//       for (let i = 1; i <= count; i++) {
+//         products.push(createRandomProduct(`${new Date().toString()}-${page}-${i}`));
+//       }
+//       resolve(products);
+//     }, 1000);
+//   });
+// };

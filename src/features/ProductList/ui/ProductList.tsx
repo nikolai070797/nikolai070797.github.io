@@ -1,15 +1,14 @@
 import React, { useEffect, useRef } from 'react';
-import { ProductPreview } from '@entities/product';
+import { Product } from '@entities/product';
 import { Card } from '@mui/material';
-import { CartItem } from '@shared/ui/cart';
 
 export type ProductListProps = {
-  products: ProductPreview[];
-  onRemove?: (id: string) => void;
+  products: Product[];
   onLoadMore?: () => void;
+  renderItem: (product: Product) => React.ReactNode;
 };
 
-const ProductList = ({ products, onRemove, onLoadMore }: ProductListProps) => {
+const ProductList = ({ products, onLoadMore, renderItem }: ProductListProps) => {
   const sentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -18,7 +17,6 @@ const ProductList = ({ products, onRemove, onLoadMore }: ProductListProps) => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          console.log(entries[0]);
           onLoadMore();
         }
       },
@@ -41,10 +39,10 @@ const ProductList = ({ products, onRemove, onLoadMore }: ProductListProps) => {
     <>
       {products.map((product) => (
         <Card key={product.id} sx={{ height: 'fit-content' }}>
-          <CartItem onRemove={() => onRemove?.(product.id)} product={product} />
+          {renderItem(product)}
         </Card>
       ))}
-      {/* Sentinel для отслеживания прокрутки */}
+      {/* Sentinel для отслеживания прокрутки */} 
       <div ref={sentinelRef} style={{ height: '20px' }} />
     </>
   );

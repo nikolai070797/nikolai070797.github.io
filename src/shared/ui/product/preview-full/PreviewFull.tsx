@@ -2,12 +2,13 @@ import { Avatar, Box, Chip, List, ListItem, Typography } from '@mui/material';
 import { Product } from '@entities/product';
 import { CartButtonAdd } from '@shared/ui/cart';
 import Price from '@shared/ui/price';
+import { memo } from 'react';
 
 export type PreviewFullProps = {
   product: Product;
 };
 
-function PreviewFull({ product }: PreviewFullProps) {
+const PreviewFull = memo(({ product }: PreviewFullProps) => {
   return (
     <Box id={product.id}>
       <List>
@@ -34,7 +35,7 @@ function PreviewFull({ product }: PreviewFullProps) {
         <ListItem>
           <Box width={1} sx={{ display: 'inline-flex', justifyContent: 'space-between' }}>
             <Price price={product.price} oldPrice={product.oldPrice} />
-            <CartButtonAdd />
+            <CartButtonAdd product={product} />
           </Box>
         </ListItem>
       </List>
@@ -49,6 +50,6 @@ function PreviewFull({ product }: PreviewFullProps) {
       </Box>
     </Box>
   );
-}
+});
 
 export default PreviewFull;
