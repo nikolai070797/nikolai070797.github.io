@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import { useCartStore } from '@shared/store';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import s from './CartButtonAdd.module.scss';
@@ -13,14 +13,14 @@ export type CartButtonAddProps = {
   product: Product;
 };
 
-const CartButtonAdd = ({ product }: CartButtonAddProps) => {
+const CartButtonAdd = memo(({ product }: CartButtonAddProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'components.CartButtonAdd' });
   const cartStore = useCartStore();
   const [countProduct, setCountProduct] = useState(0);
 
   // Синхронизация локального состояния с корзиной
   useEffect(() => {
-    const cartItem = cartStore.cartItems.find((item) => item.product.id === product.id);
+    const cartItem = cartStore.cartItems.find((item) => item.productId === product.id);
     setCountProduct(cartItem ? cartItem.quantity : 0);
   }, [cartStore.cartItems, product.id]);
 
@@ -33,23 +33,9 @@ const CartButtonAdd = ({ product }: CartButtonAddProps) => {
   };
 
   const onChangeHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newCount = Number.parseInt(e.target.value);
+    const newCount = parseInt(e.target.value);
     if (!isNaN(newCount) && newCount >= 0) {
-      const currentCount = cartStore.cartItems.find((item) => item.product.id === product.id)?.quantity || 0;
-      const difference = newCount - currentCount;
-
-      if (difference > 0) {
-        // Увеличиваем количество в корзине
-        for (let i = 0; i < difference; i++) {
-          cartStore.addProduct(product);
-        }
-      } else if (difference < 0) {
-        // Уменьшаем количество в корзине
-        for (let i = 0; i < -difference; i++) {
-          cartStore.decrementProduct(product.id);
-        }
-      }
-      setCountProduct(newCount);
+      cartStore.setQuantity(product.id, newCount); // Используем новый метод
     }
   };
 
@@ -76,6 +62,6 @@ const CartButtonAdd = ({ product }: CartButtonAddProps) => {
       )}
     </>
   );
-};
+});
 
 export default CartButtonAdd;

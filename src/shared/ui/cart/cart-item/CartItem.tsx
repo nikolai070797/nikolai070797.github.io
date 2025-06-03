@@ -4,13 +4,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import s from './CartItem.module.scss';
 import Price from '@shared/ui/price';
 import CartButtonAdd from '../cart-button-add/CartButtonAdd';
+import { memo } from 'react';
 
 export type CartItemProps = {
   product: ProductPreview;
   onRemove: () => void;
 };
 
-const CartItem = ({ product, onRemove }: CartItemProps) => {
+const CartItem = memo(({ product, onRemove }: CartItemProps) => {
   return (
     <Box gap={2} className={s['cart-item']}>
       <img width={128} height={128} src={product.photo} />
@@ -30,6 +31,6 @@ const CartItem = ({ product, onRemove }: CartItemProps) => {
       </Box>
     </Box>
   );
-};
+});
 
 export default CartItem;
