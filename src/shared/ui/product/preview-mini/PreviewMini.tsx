@@ -1,15 +1,16 @@
-import { ProductPreview } from '@entities/product';
+import { Product, ProductPreview } from '@entities/product';
 import { Box, List, ListItem, Stack, Typography } from '@mui/material';
 import s from './PreviewMini.module.scss';
 import cn from 'clsx';
 import { CartButtonAdd } from '@shared/ui/cart';
 import Price from '@shared/ui/price';
+import { memo } from 'react';
 
 export type PreviewMiniProps = {
   product: ProductPreview;
 };
 
-const PreviewMini = ({ product }: PreviewMiniProps) => {
+const PreviewMini = memo(({ product }: PreviewMiniProps) => {
   return (
     <Box className={s.container}>
       <List>
@@ -32,12 +33,12 @@ const PreviewMini = ({ product }: PreviewMiniProps) => {
         <ListItem>
           <Stack width={1} direction="row" sx={{ justifyContent: 'space-between' }}>
             <Price price={product.price} oldPrice={product.oldPrice} />
-            <CartButtonAdd />
+            <CartButtonAdd product={product as Product} />
           </Stack>
         </ListItem>
       </List>
     </Box>
   );
-};
+});
 
 export default PreviewMini;

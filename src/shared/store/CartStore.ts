@@ -1,36 +1,97 @@
-// import { Product } from '@entities/product';
+import { Product } from '@entities/product';
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
-export type CartStoreProps = {
-  productsId: string[];
-  addProduct: (productId: string) => void;
-  removeProduct: (productId: string) => void;
-  clear: () => void;
+// Тип элемента корзины: хранит только ID и количество
+type CartItemStoreProps = {
+  productId: string;
+  quantity: number;
 };
 
-export const useCartStore = create<CartStoreProps>((set) => ({
-  productsId: [],
+export type CartStoreProps = {
+  cartItems: CartItemStoreProps[];
 
-  // Добавляем товар (можно добавить логику учета количества одинаковых товаров)
-  addProduct: (productId) =>
-    set((state) => ({
-      productsId: [...state.productsId, productId],
-    })),
+  // Методы для работы с корзиной
+  addProduct: (product: Product) => void;
+  decrementProduct: (productId: string) => void;
+  removeProduct: (productId: string) => void;
+  clear: () => void;
 
-  // Удаляем товар по ID
-  // removeProduct: (productId) => set((state) => ({
-  removeProduct: () =>
-    set((state) => ({
-      // products: state.products.filter(p => p.id !== productId)
-      productsId: state.productsId.slice(0, -1),
-    })),
+  // Новый метод для установки количества товара
+  setQuantity: (productId: string, quantity: number) => void;
+};
 
-  // Очищаем корзину
-  clear: () => set({ productsId: [] }),
-}));
+export const useCartStore = create<CartStoreProps>()(
+  persist(
+    (set) => ({
+      cartItems: [],
 
-// Хук для получения количества товаров
+      addProduct: (product) =>
+        set((state) => {
+          const existingItem = state.cartItems.find((item) => item.productId === product.id);
+          if (existingItem) {
+            return {
+              cartItems: state.cartItems.map((item) =>
+                item.productId === product.id ? { ...item, quantity: item.quantity + 1 } : item
+              ),
+            };
+          }
+          return {
+            cartItems: [...state.cartItems, { productId: product.id, quantity: 1 }],
+          };
+        }),
+
+      decrementProduct: (productId) =>
+        set((state) => {
+          const existingItem = state.cartItems.find((item) => item.productId === productId);
+          if (existingItem) {
+            if (existingItem.quantity > 1) {
+              return {
+                cartItems: state.cartItems.map((item) =>
+                  item.productId === productId ? { ...item, quantity: item.quantity - 1 } : item
+                ),
+              };
+            }
+            return {
+              cartItems: state.cartItems.filter((item) => item.productId !== productId),
+            };
+          }
+          return state;
+        }),
+
+      removeProduct: (productId) =>
+        set((state) => ({
+          cartItems: state.cartItems.filter((item) => item.productId !== productId),
+        })),
+
+      clear: () => set({ cartItems: [] }),
+
+      // Новый метод: установка конкретного количества товара
+      setQuantity: (productId, quantity) =>
+        set((state) => {
+          if (quantity <= 0) {
+            return {
+              cartItems: state.cartItems.filter((item) => item.productId !== productId),
+            };
+          }
+          const existingItem = state.cartItems.find((item) => item.productId === productId);
+          if (existingItem) {
+            return {
+              cartItems: state.cartItems.map((item) => (item.productId === productId ? { ...item, quantity } : item)),
+            };
+          }
+          return state;
+        }),
+    }),
+    {
+      name: 'cart-store',
+      version: 2,
+    }
+  )
+);
+
+// Хук для получения общего количества товаров в корзине
 export const useCartCount = () => {
-  const { productsId } = useCartStore();
-  return productsId.length;
+  const { cartItems } = useCartStore();
+  return cartItems.reduce((total, item) => total + item.quantity, 0);
 };
