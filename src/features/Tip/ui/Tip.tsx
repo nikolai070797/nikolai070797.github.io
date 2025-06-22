@@ -114,12 +114,6 @@ export const Tip: FC<TipProps> = ({
   const tipRef = useRef<HTMLDivElement>(null);
   const holderRef = useRef<HTMLDivElement>(null);
 
-  // Обновляем place при изменении пропса
-  useEffect(() => {
-    setState((prev) => ({ ...prev, place }));
-  }, [place]);
-
-  // Обработка событий мыши
   const handleMouseEnter = () => {
     // Очищаем предыдущий таймер, если он был
     if (timeoutId.current) {
@@ -127,7 +121,6 @@ export const Tip: FC<TipProps> = ({
       timeoutId.current = null;
     }
 
-    // Монтируем подсказку
     setState((prev) => ({ ...prev, mounted: true }));
 
     // Устанавливаем новый таймер
@@ -229,14 +222,14 @@ export const Tip: FC<TipProps> = ({
     }
   }, [state.mounted]);
 
-  // Сброс позиции при размонтировании
+  // Очистка таймера при размонтировании компонента
   useEffect(() => {
     return () => {
       if (timeoutId.current) window.clearTimeout(timeoutId.current);
     };
   }, []);
 
-  // Подписка на события скролла и изменения размеров окна
+  // Обновление позиции при изменении размеров окна
   useEffect(() => {
     if (!state.visible || !holderRef.current || !tipRef.current) return;
 
