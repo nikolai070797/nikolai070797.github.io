@@ -50,16 +50,16 @@ export const Bottom: Story = {
 export const Scroll: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '3rem', gap: '1rem', width: '200vw', height: '150vh' }}>
-      <Tip place={TipPlace.top} title={<Typography>My custom title TOP</Typography>} delayHide={10000}>
+      <Tip place={TipPlace.top} title={<Typography>My custom title TOP</Typography>} delayHide={1000}>
         <Typography>TOP</Typography>
       </Tip>
-      <Tip place={TipPlace.left} title={<Typography>My custom title LEFT</Typography>} delayHide={10000}>
+      <Tip place={TipPlace.left} title={<Typography>My custom title LEFT</Typography>} delayHide={1000}>
         <Typography>LEFT</Typography>
       </Tip>
-      <Tip place={TipPlace.right} title={<Typography>My custom title RIGHT</Typography>} delayHide={10000}>
+      <Tip place={TipPlace.right} title={<Typography>My custom title RIGHT</Typography>} delayHide={1000}>
         <Typography>RIGHT</Typography>
       </Tip>
-      <Tip place={TipPlace.bottom} title={<Typography>My custom title Bottom</Typography>} delayHide={10000}>
+      <Tip place={TipPlace.bottom} title={<Typography>My custom title Bottom</Typography>} delayHide={1000}>
         <Typography>BOTTOM</Typography>
       </Tip>
     </div>

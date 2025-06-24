@@ -20,20 +20,98 @@ export enum TipPlace {
   right = 'right',
 }
 
-// Получить противоположное место
-const getReversePlace = (place: TipPlace): TipPlace => {
-  switch (place) {
-    case TipPlace.top:
-      return TipPlace.bottom;
-    case TipPlace.bottom:
-      return TipPlace.top;
-    case TipPlace.left:
-      return TipPlace.right;
-    case TipPlace.right:
-      return TipPlace.left;
-    default:
-      return place;
+// Найти лучшее место для позиционирования Tip
+const findBestPlacement = (
+  holderRect: DOMRect,
+  tip: HTMLDivElement,
+  possiblePositions: TipPlace[],
+  currentPlace: TipPlace
+): TipPlace => {
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+  const padding = 8;
+
+  const tipWidth = tip.offsetWidth;
+  const tipHeight = tip.offsetHeight;
+
+  // Функция для расчёта "скрытости" подсказки
+  const calculateOverflow = (left: number, top: number) => {
+    const overflowLeft = Math.max(0, -left + padding);
+    const overflowRight = Math.max(0, left + tipWidth - (viewportWidth - padding));
+    const overflowTop = Math.max(0, -top + padding);
+    const overflowBottom = Math.max(0, top + tipHeight - (viewportHeight - padding));
+
+    return {
+      total: overflowLeft + overflowRight + overflowTop + overflowBottom,
+    };
+  };
+
+  // Функция для расчёта доступного пространства в направлении позиции
+  const getAvailableSpace = (place: TipPlace) => {
+    switch (place) {
+      case TipPlace.top:
+        return holderRect.top;
+      case TipPlace.bottom:
+        return viewportHeight - holderRect.bottom;
+      case TipPlace.left:
+        return holderRect.left;
+      case TipPlace.right:
+        return viewportWidth - holderRect.right;
+      default:
+        return 0;
+    }
+  };
+
+  // Оценка каждой позиции
+  const placementsWithScore = possiblePositions.map((place) => {
+    const { left, top } = calculatePosition(holderRect, tip, place);
+    const { total: overflow } = calculateOverflow(left, top);
+    const availableSpace = getAvailableSpace(place);
+
+    // Проверяем, достаточно ли места в направлении позиции
+    let spaceOK = false;
+    switch (place) {
+      case TipPlace.top:
+      case TipPlace.bottom:
+        spaceOK = availableSpace >= tipHeight; // достаточно вертикального места
+        break;
+      case TipPlace.left:
+      case TipPlace.right:
+        spaceOK = availableSpace >= tipWidth; // достаточно горизонтального места
+        break;
+    }
+
+    // Приоритет: наличие места → минимальный overflow → максимальное доступное пространство
+    const score = spaceOK ? 0 : 10000 + overflow * 100 - availableSpace;
+
+    return {
+      place,
+      overflow,
+      availableSpace,
+      spaceOK,
+      score,
+    };
+  });
+
+  // Сортировка: сначала позиции с достаточным местом, затем по наименьшему overflow и наибольшему availableSpace
+  placementsWithScore.sort((a, b) => {
+    if (a.spaceOK !== b.spaceOK) {
+      return a.spaceOK ? -1 : 1; // позиции с достаточным местом выше
+    }
+    if (a.overflow !== b.overflow) {
+      return a.overflow - b.overflow; // меньший overflow
+    }
+    return b.availableSpace - a.availableSpace; // большее доступное пространство
+  });
+
+  // Проверяем, подходит ли текущая позиция
+  for (const item of placementsWithScore) {
+    if (item.place === currentPlace && item.spaceOK) {
+      return item.place;
+    }
   }
+
+  return placementsWithScore[0].place;
 };
 
 // Вычислить позицию для заданного места
@@ -168,58 +246,34 @@ export const Tip: FC<TipProps> = ({
   });
 
   // Автоматическое определение позиции
-  useLayoutEffect(() => {
-    if (tipRef.current && state.mounted && holderRef.current) {
-      const tipRect = tipRef.current.getBoundingClientRect();
+  useEffect(() => {
+    setTimeout(() => {
+      if (!state.mounted || !holderRef.current || !tipRef.current) return;
+
       const holderRect = holderRef.current.getBoundingClientRect();
+      const tipRect = tipRef.current.getBoundingClientRect();
 
-      const rectContainer = container.getBoundingClientRect();
-      const tipHeight = tipRef.current.clientHeight;
-      const tipWidth = tipRef.current.clientWidth;
+      // Получаем список всех возможных позиций
+      const possiblePositions = [TipPlace.top, TipPlace.bottom, TipPlace.left, TipPlace.right];
 
-      setState((prev) => ({
-        ...prev,
-        position: {
-          left: holderRect.x + holderRect.width / 2 - tipWidth / 2 - rectContainer.x,
-          top: holderRect.y + tipHeight / 2 - rectContainer.y,
-        },
-      }));
+      // Находим оптимальное место
+      const bestPlace = findBestPlacement(holderRect, tipRef.current, possiblePositions, place);
 
-      // Проверяем, помещается ли tooltip в текущем месте
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
-      const padding = 8;
-      let needsReverse = false;
-
-      switch (state.place) {
-        case TipPlace.top:
-        case TipPlace.bottom:
-          // Проверяем горизонтальные границы
-          if (tipRect.left < padding || tipRect.right > viewportWidth - padding) {
-            needsReverse = true;
-          }
-          break;
-
-        case TipPlace.left:
-        case TipPlace.right:
-          // Проверяем вертикальные границы
-          if (tipRect.top < padding || tipRect.bottom > viewportHeight - padding) {
-            needsReverse = true;
-          }
-          break;
-      }
-
-      if (needsReverse) {
-        const reversedPlace = getReversePlace(state.place);
-        const newPosition = calculatePosition(holderRect, tipRef.current, reversedPlace);
-
+      if (bestPlace !== state.place) {
+        const newPosition = calculatePosition(holderRect, tipRef.current, bestPlace);
         setState((prev) => ({
           ...prev,
-          place: reversedPlace,
+          place: bestPlace,
+          position: newPosition,
+        }));
+      } else {
+        const newPosition = calculatePosition(holderRect, tipRef.current, state.place);
+        setState((prev) => ({
+          ...prev,
           position: newPosition,
         }));
       }
-    }
+    }, 0);
   }, [state.mounted]);
 
   // Очистка таймера при размонтировании компонента
@@ -228,6 +282,23 @@ export const Tip: FC<TipProps> = ({
       if (timeoutId.current) window.clearTimeout(timeoutId.current);
     };
   }, []);
+
+  // Автоматическое обновление позиции подсказки при изменении размера окна
+  useEffect(() => {
+    if (!tipRef.current || !state.visible) return;
+
+    const observer = new ResizeObserver(() => {
+      if (holderRef.current && tipRef.current) {
+        const holderRect = holderRef.current.getBoundingClientRect();
+        const newPosition = calculatePosition(holderRect, tipRef.current!, state.place);
+        setState((prev) => ({ ...prev, position: newPosition }));
+      }
+    });
+
+    observer.observe(tipRef.current);
+
+    return () => observer.disconnect();
+  }, [state.visible]);
 
   // Обновление позиции при изменении размеров окна
   useEffect(() => {
