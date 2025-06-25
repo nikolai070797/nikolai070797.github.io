@@ -11,6 +11,7 @@ type Params = {
   "/cart": {};
   "/modal": {};
   "/product": {};
+  "/examples": {};
   "/*": {
     "*": string;
   };
