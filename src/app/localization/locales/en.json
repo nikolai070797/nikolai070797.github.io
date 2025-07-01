@@ -15,6 +15,7 @@
     "cart": { "title": "Cart", "empty": "Cart is empty", "clear": "Clear Cart",  "showMore": "Show more" },
     "product": { "title": "Product" },
     "profile": { "title": "Profile" },
+    "examples": { "title": "Examples" },
     "404": { "title": "Home", "text": "Page not found", "urlBack": "Back to home page" }
   },
   "errors": {
