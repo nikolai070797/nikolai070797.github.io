@@ -257,6 +257,65 @@ export const Tip: FC<TipProps> = ({
     };
   }, [state.visible]);
 
+  // ResizeObserver
+  useEffect(() => {
+    if (!state.mounted || !holderRef.current || !tipRef.current) return;
+
+    const resizeObserver = new ResizeObserver(() => {
+      if (holderRef.current && tipRef.current) {
+        const holderRect = holderRef.current.getBoundingClientRect();
+        let currentPlace = state.place;
+        let position = calculatePosition(holderRect, tipRef.current, currentPlace);
+
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const padding = 8;
+        const tipWidth = tipRef.current.clientWidth;
+        const tipHeight = tipRef.current.clientHeight;
+        const tipRect = {
+          left: position.left,
+          top: position.top,
+          right: position.left + tipWidth,
+          bottom: position.top + tipHeight,
+        };
+
+        let needsReverse = false;
+
+        switch (currentPlace) {
+          case TipPlace.top:
+          case TipPlace.bottom:
+            if (tipRect.left < padding || tipRect.right > viewportWidth - padding) {
+              needsReverse = true;
+            }
+            break;
+          case TipPlace.left:
+          case TipPlace.right:
+            if (tipRect.top < padding || tipRect.bottom > viewportHeight - padding) {
+              needsReverse = true;
+            }
+            break;
+        }
+
+        if (needsReverse) {
+          currentPlace = getReversePlace(currentPlace);
+          position = calculatePosition(holderRect, tipRef.current, currentPlace);
+        }
+
+        setState((prev) => ({
+          ...prev,
+          place: currentPlace,
+          position: position,
+        }));
+      }
+    });
+
+    resizeObserver.observe(holderRef.current);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [state.mounted]);
+
   return (
     <>
       {clonedChild}
