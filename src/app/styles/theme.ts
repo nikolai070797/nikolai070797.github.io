@@ -8,7 +8,7 @@ export const muiLocales = {
 
 export const defaultLocale = 'ru';
 
-const getInitialLocale = () => {
+export const getInitialLocale = () => {
   // Проверяем, что код выполняется в браузере
   if (typeof window === 'undefined') {
     return muiLocales.ru; 

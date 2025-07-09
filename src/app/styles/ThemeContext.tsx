@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { getTheme, muiLocales, setThemeLocale } from './theme';
 import { useTranslation } from 'react-i18next';
+import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 
 type ThemeContextType = {
   theme: any;
@@ -29,11 +30,14 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, [i18n]);
 
-  return (
-    <ThemeContext.Provider value={{ theme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={{ theme }}>{children}</ThemeContext.Provider>;
+};
+
+// Отдельный компонент для MUI ThemeProvider
+export const MuiThemeProviderWrapper = ({ children }: { children: React.ReactNode }) => {
+  const { theme } = useAppTheme();
+
+  return <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>;
 };
 
 export const useAppTheme = () => {

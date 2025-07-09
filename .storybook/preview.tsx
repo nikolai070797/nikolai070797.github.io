@@ -2,35 +2,34 @@ import type { Preview } from '@storybook/react';
 import { withRouter, reactRouterParameters } from 'storybook-addon-remix-react-router';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
-import { theme } from '../src/app/styles';
 import { LocalizationInitiator } from '../src/app/localization/LocalizationInitiator';
-
 import { StyledEngineProvider, useTheme } from '@mui/material/styles';
-import React from 'react';
-
-
 import { createTheme } from '@mui/material';
+import { getInitialLocale } from '../src/app/styles/theme';
 
-
-export const lightTheme = createTheme({
-  palette: {
-    mode: 'light',
+export const lightTheme = createTheme(
+  {
+    palette: {
+      mode: 'light',
+    },
+    cssVariables: {
+      colorSchemeSelector: 'class',
+    },
   },
-  cssVariables: {
-    colorSchemeSelector: 'class',
-  },
-});
+  getInitialLocale()
+);
 
-export const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
+export const darkTheme = createTheme(
+  {
+    palette: {
+      mode: 'dark',
+    },
+    cssVariables: {
+      colorSchemeSelector: 'class',
+    },
   },
-  cssVariables: {
-    colorSchemeSelector: 'class',
-  },
-});
-
-
+  getInitialLocale()
+);
 
 const preview: Preview = {
   decorators: [
@@ -46,7 +45,7 @@ const preview: Preview = {
     }),
     (Story) => (
       <StyledEngineProvider injectFirst>
-        <LocalizationInitiator/>
+        <LocalizationInitiator />
         {Story()}
       </StyledEngineProvider>
     ),
@@ -68,4 +67,3 @@ const preview: Preview = {
 };
 
 export default preview;
-
