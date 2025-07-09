@@ -18,3 +18,16 @@ export const fetchCategories = async (): Promise<Category[]> => {
     }, 1000);
   });
 };
+
+export const fetchRandomCategories = async (count: number): Promise<Category[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const categorys: Category[] = [];
+      for (let i = 1; i <= count; i++) {
+        const randomIndex = Math.floor(Math.random() * categoriesMock.length);
+        categorys.push(categoriesMock[randomIndex]);
+      }
+      resolve(categorys);
+    }, 1000);
+  });
+};
