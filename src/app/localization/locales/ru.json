@@ -7,7 +7,23 @@
     "localization": { "title": "Язык" },
     "CartButtonAdd": { "textButton": "В корзину" },
     "Footer": { "text": "Footer" },
-    "product": { "noMoreProducts": "Нет больше продуктов" }
+    "product": {
+      "noMoreProducts": "Нет больше продуктов",
+      "name": "Имя",
+      "photo": "Фото",
+      "desc": "Описание",
+      "oldPrice": "Старая цена",
+      "price": "Цена",
+      "category": "Категория",
+      "submit": "Сохранить"
+    },
+    "auth": {
+      "login": "Вход",
+      "register": "Регистрация",
+      "email": "Почта",
+      "password": "Пароль",
+      "confirmPassword": "Подтвердите пароль"
+    }
   },
   "pages": {
     "home": { "title": "Домашняя страница" },
@@ -16,10 +32,22 @@
     "product": { "title": "Продукт" },
     "profile": { "title": "Профиль" },
     "examples": { "title": "Примеры" },
+    "login": { "title": "Вход" },
     "404": { "title": "Домашняя страница", "text": "Страница не найдена", "urlBack": "Вернуться на главную" }
   },
   "errors": {
-    "LoadingProducts": "Ошибка загрузки товаров"
+    "LoadingProducts": "Ошибка загрузки товаров",
+    "auth": {
+      "invalid_email": "Неверный адрес электронной почты",
+      "invalid_password": "Пароль должен содержать не менее {{length}} символов",
+      "invalid_confirmPassword": "Пароли не совпадают"
+    },
+    "product": {
+      "invalid_name": "Имя обязательно",
+      "invalid_photo": "Должен быть допустимым URL",
+      "invalid_oldPrice_min": "Цена должна быть положительной",
+      "invalid_price": "Цена должна быть положительной",
+      "invalid_category": "Категория обязательна"
+    }
   }
 }
-

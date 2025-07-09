@@ -30,8 +30,6 @@ const DesktopMenu = () => {
         anchorEl={anchorEl}
         open={isMenuOpen}
         onClose={handleMenuClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         keepMounted
       >
         <MenuItem onClick={handleMenuClose}>{t("pages.profile.title")}</MenuItem>

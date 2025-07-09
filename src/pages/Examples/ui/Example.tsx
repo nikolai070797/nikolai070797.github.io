@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Tip from '@features/Tip';
 import { TipPlace } from '@features/Tip/ui/Tip';
 import { Typography } from '@mui/material';
@@ -6,6 +6,9 @@ import { useTranslation } from 'react-i18next';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import { AuthForm, ProductForm } from '@features/forms';
+import { Category } from '@shared/types';
+import { fetchCategories } from '@shared/api/categories';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -40,10 +43,19 @@ function a11yProps(index: number) {
 const ExamplePage = () => {
   const { t } = useTranslation('translation');
   const [value, setValue] = useState(0);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    const loadInitialCategories = async () => {
+      const initialCategories = await fetchCategories();
+      setCategories(initialCategories);
+    };
+    loadInitialCategories();
+  }, []);
 
   return (
     <Box sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100%' }}>
@@ -56,6 +68,8 @@ const ExamplePage = () => {
         sx={{ borderRight: 1, borderColor: 'divider' }}
       >
         <Tab label="Tip" {...a11yProps(0)} />
+        <Tab label="Product form" {...a11yProps(1)} />
+        <Tab label="Login form" {...a11yProps(2)} />
       </Tabs>
       <TabPanel value={value} index={0}>
         <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '3rem', gap: '1rem' }}>
@@ -72,6 +86,12 @@ const ExamplePage = () => {
             <Typography>BOTTOM</Typography>
           </Tip>
         </Box>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <ProductForm categories={categories} />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <AuthForm />
       </TabPanel>
     </Box>
   );

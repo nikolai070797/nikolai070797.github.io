@@ -7,18 +7,46 @@
     "localization": { "title": "Language" },
     "CartButtonAdd": { "textButton": "Buy" },
     "Footer": { "text": "Footer" },
-    "product": { "noMoreProducts": "No More Products" }
+    "product": {
+      "noMoreProducts": "No more products",
+      "name": "Name",
+      "photo": "Photo",
+      "desc": "Description",
+      "oldPrice": "Old price",
+      "price": "Price",
+      "category": "Category",
+      "submit": "Submit"
+    },
+    "auth": {
+      "login": "Login",
+      "register": "Register",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password"
+    }
   },
   "pages": {
     "home": { "title": "Home" },
     "modal": { "title": "Modal" },
-    "cart": { "title": "Cart", "empty": "Cart is empty", "clear": "Clear Cart",  "showMore": "Show more" },
+    "cart": { "title": "Cart", "empty": "Cart is empty", "clear": "Clear Cart", "showMore": "Show more" },
     "product": { "title": "Product" },
     "profile": { "title": "Profile" },
     "examples": { "title": "Examples" },
+    "login": { "title": "Login" },
     "404": { "title": "Home", "text": "Page not found", "urlBack": "Back to home page" }
   },
   "errors": {
-    "LoadingProducts": "Error loading products"
+    "LoadingProducts": "Error loading products",
+    "auth": {
+      "invalid_email": "Invalid email address",
+      "invalid_password": "Password must be at least {{length}} characters",
+      "invalid_confirmPassword": "Passwords don't match"
+    },
+    "product": {
+      "invalid_name": "Name is required",
+      "invalid_photo": "Must be a valid URL",
+      "invalid_price": "Price must be positive",
+      "invalid_category": "Category is required"
+    }
   }
 }
