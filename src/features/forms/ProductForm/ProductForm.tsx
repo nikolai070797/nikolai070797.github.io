@@ -2,7 +2,16 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { TextField, FormHelperText, Button, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
+import {
+  TextField,
+  FormHelperText,
+  Button,
+  FormControl,
+  Box,
+  Autocomplete,
+  Typography,
+  CircularProgress,
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Category } from '@shared/types';
 import { Product } from '@entities/product';
@@ -10,9 +19,10 @@ import { Product } from '@entities/product';
 export type ProductFormProps = {
   categories: Category[];
   defaultValues?: Product;
+  loading: boolean;
 };
 
-export const ProductForm: React.FC<ProductFormProps> = ({ categories, defaultValues }) => {
+export const ProductForm: React.FC<ProductFormProps> = ({ categories, defaultValues, loading }) => {
   const { t } = useTranslation('translation', { keyPrefix: 'components.product' });
   const { t: tErrors } = useTranslation('translation', { keyPrefix: 'errors.product' });
 
@@ -89,24 +99,49 @@ export const ProductForm: React.FC<ProductFormProps> = ({ categories, defaultVal
         helperText={errors.price?.message}
       />
 
-      <FormControl fullWidth margin="normal">
-        <InputLabel>{t('category')}</InputLabel>
+      <FormControl fullWidth margin="normal" error={!!errors.categoryId}>
         <Controller
           name="categoryId"
           control={control}
-          render={({ field }) => (
-            <Select {...field} label={t('category')} error={!!errors.categoryId}>
-              {categories.map((category) => (
-                <MenuItem key={category.id} value={category.id}>
-                  {category.name}
-                </MenuItem>
-              ))}
-            </Select>
-          )}
-        />
-        {errors.categoryId && <FormHelperText error={true}>{errors.categoryId.message}</FormHelperText>}
-      </FormControl>
+          shouldUnregister
+          render={({ field }) => {
+            const selectedCategory = categories.find((cat) => cat.id === field.value);
 
+            return (
+              <Autocomplete
+                loading={loading}
+                options={categories}
+                getOptionLabel={(option) => option.name}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                getOptionKey={(option) => option.id}
+                value={selectedCategory || null}
+                onChange={(_, newValue) => {
+                  field.onChange(newValue?.id || '');
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label={<Typography>{t('category')}</Typography>}
+                    error={!!errors.categoryId}
+                    slotProps={{
+                      input: {
+                        ...params.InputProps,
+                        endAdornment: (
+                          <React.Fragment>
+                            {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                            {params.InputProps.endAdornment}
+                          </React.Fragment>
+                        ),
+                      },
+                    }}
+                  />
+                )}
+              />
+            );
+          }}
+        />
+        {errors.categoryId && <FormHelperText error>{errors.categoryId.message}</FormHelperText>}
+      </FormControl>
       <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
         {t('submit')}
       </Button>

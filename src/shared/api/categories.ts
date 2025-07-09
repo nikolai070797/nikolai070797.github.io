@@ -15,6 +15,6 @@ export const fetchCategories = async (): Promise<Category[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(categoriesMock);
-    }, 0);
+    }, 1000);
   });
 };

@@ -44,18 +44,24 @@ const ExamplePage = () => {
   const { t } = useTranslation('translation');
   const [value, setValue] = useState(0);
   const [categories, setCategories] = useState<Category[]>([]);
+const [loading, setLoading] = useState(true);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
-  useEffect(() => {
-    const loadInitialCategories = async () => {
+useEffect(() => {
+  const loadInitialCategories = async () => {
+    setLoading(true);
+    try {
       const initialCategories = await fetchCategories();
       setCategories(initialCategories);
-    };
-    loadInitialCategories();
-  }, []);
+    } finally {
+      setLoading(false);
+    }
+  };
+  loadInitialCategories();
+}, []);
 
   return (
     <Box sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100%' }}>
@@ -88,7 +94,7 @@ const ExamplePage = () => {
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <ProductForm categories={categories} />
+        <ProductForm categories={categories} loading={loading} />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <AuthForm />
