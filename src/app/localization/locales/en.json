@@ -66,7 +66,7 @@
       "invalid_name": "Name is required",
       "invalid_email": "Must be a valid email address",
       "invalid_phone": "Phone is required",
-      "invalid_about": "About is required"
+      "invalid_about": "About must be at least {{length}} characters"
     }
   }
 }

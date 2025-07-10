@@ -1,4 +1,4 @@
-import { ProfileForm } from '@features/forms/ProfileForm';
+import { ClientForm } from '@features/forms/ClientForm';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -10,7 +10,7 @@ const ProfilePage = () => {
       <Box sx={{ mt: 3 }}>
         <Typography>{t("updateProfile.title")}</Typography>
       </Box>
-      <ProfileForm />
+      <ClientForm />
     </>
   );
 };

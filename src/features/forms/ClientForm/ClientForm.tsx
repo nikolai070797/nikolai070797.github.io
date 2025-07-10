@@ -7,22 +7,21 @@ import { useTranslation } from 'react-i18next';
 import { Client } from '@shared/types';
 
 // Схема валидации
-const createClientSchema = (tErrors: (key: string) => string) =>
+const createClientSchema = (tErrors: (key: string, params?: {}) => string) =>
   z.object({
     name: z.string().min(1, tErrors('invalid_name')),
     email: z.string().email(tErrors('invalid_email')),
     phone: z.string().regex(/^\+?[1-9]\d{7,14}$/, tErrors('invalid_phone')),
-    about: z.string().min(5, tErrors('invalid_about')),
+    about: z.string().min(5, tErrors('invalid_about', { length: 5 })).or(z.literal("")),
   });
 
 export type ClientFormValues = z.infer<ReturnType<typeof createClientSchema>>;
 
 export type ClientFormProps = {
   defaultValues?: Client;
-  loading?: boolean;
 };
 
-export const ProfileForm: React.FC<ClientFormProps> = ({ defaultValues, loading = false }) => {
+export const ClientForm: React.FC<ClientFormProps> = ({ defaultValues }) => {
   const { t } = useTranslation('translation', { keyPrefix: 'components.client' });
   const { t: tErrors } = useTranslation('translation', { keyPrefix: 'errors.client' });
 
@@ -88,7 +87,7 @@ export const ProfileForm: React.FC<ClientFormProps> = ({ defaultValues, loading 
         helperText={errors.about?.message}
       />
 
-      <Button type="submit" variant="contained" fullWidth sx={{ mt: 3, mb: 2 }} disabled={loading}>
+      <Button type="submit" variant="contained" fullWidth sx={{ mt: 3, mb: 2 }}>
         {t('submit')}
       </Button>
     </Box>
