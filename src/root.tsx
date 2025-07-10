@@ -1,20 +1,22 @@
-import Layout from '@widgets/Layout';
 import React from 'react';
-import { ThemeProvider } from '@mui/material/styles';
+import Layout from '@widgets/Layout';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
-import { theme } from '@app/styles';
+
+import { ThemeProvider as AppThemeProvider, MuiThemeProviderWrapper, useAppTheme } from '@app/styles/ThemeContext';
 import { LocalizationInitiator } from '@app/localization/LocalizationInitiator';
 
 export default function App() {
   return (
     <React.StrictMode>
       <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={theme}>
-          <LocalizationInitiator/>
-          <CssBaseline />
-          <Layout />
-        </ThemeProvider>
+        <AppThemeProvider>
+          <MuiThemeProviderWrapper>
+            <LocalizationInitiator />
+            <CssBaseline />
+            <Layout />
+          </MuiThemeProviderWrapper>
+        </AppThemeProvider>
       </StyledEngineProvider>
     </React.StrictMode>
   );

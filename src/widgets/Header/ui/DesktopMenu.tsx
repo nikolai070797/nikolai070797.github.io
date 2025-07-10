@@ -5,6 +5,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import IconButton from '@mui/material/IconButton';
 import { MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
+import NavLink from '@shared/ui/NavLink';
 
 const DesktopMenu = () => {
   const { t } = useTranslation();
@@ -30,11 +31,10 @@ const DesktopMenu = () => {
         anchorEl={anchorEl}
         open={isMenuOpen}
         onClose={handleMenuClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         keepMounted
       >
-        <MenuItem onClick={handleMenuClose}>{t("pages.profile.title")}</MenuItem>
+        <NavLink onClick={handleMenuClose} to="/profile">{t("pages.profile.title")}</NavLink>
+        {/* <MenuItem onClick={handleMenuClose}  >{t("pages.profile.title")}</MenuItem> */}
         <MenuItem onClick={handleMenuClose}>{t("nav.logout")}</MenuItem>
       </Menu>
     </>

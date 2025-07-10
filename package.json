@@ -73,6 +73,7 @@
   },
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-alpha.8",
+    "@hookform/resolvers": "^5.1.1",
     "@mui/icons-material": "^7.0.2",
     "@mui/lab": "latest",
     "@mui/material": "^7.0.2",
@@ -81,10 +82,13 @@
     "i18next-browser-languagedetector": "^8.1.0",
     "i18next-resources-to-backend": "^1.2.1",
     "isbot": "^5.1.17",
+    "persist-and-sync": "^1.2.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-hook-form": "^7.60.0",
     "react-i18next": "^15.5.1",
     "react-router": "^7.5.0",
+    "zod": "^3.25.75",
     "zustand": "^5.0.3"
   }
 }

@@ -12,6 +12,8 @@ type Params = {
   "/modal": {};
   "/product": {};
   "/examples": {};
+  "/login": {};
+  "/profile": {};
   "/*": {
     "*": string;
   };
