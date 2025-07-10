@@ -13,6 +13,7 @@ type Params = {
   "/product": {};
   "/examples": {};
   "/login": {};
+  "/profile": {};
   "/*": {
     "*": string;
   };
