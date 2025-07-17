@@ -9,10 +9,11 @@ interface NavLinkProps extends CommonProps {
   to: string;
   children: ReactNode;
   icon?: ReactNode;
+  onClick?: () => void;
 }
 
-const NavLink = ({ className, to, children, icon }: NavLinkProps) => (
-  <Link className={className} component={RouterLink} to={to} underline="none" color="inherit">
+const NavLink = ({ className, to, children, icon, onClick }: NavLinkProps) => (
+  <Link onClick={onClick} className={className} component={RouterLink} to={to} underline="none" color="inherit">
     <MenuItem>
       {icon && <span style={{ marginRight: 8 }}>{icon}</span>}
       {children}

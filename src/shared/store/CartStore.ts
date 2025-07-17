@@ -1,6 +1,6 @@
 import { Product } from '@entities/product';
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persistNSync } from 'persist-and-sync';
 
 // Тип элемента корзины: хранит только ID и количество
 type CartItemStoreProps = {
@@ -22,7 +22,7 @@ export type CartStoreProps = {
 };
 
 export const useCartStore = create<CartStoreProps>()(
-  persist(
+  persistNSync(
     (set) => ({
       cartItems: [],
 
@@ -85,7 +85,7 @@ export const useCartStore = create<CartStoreProps>()(
     }),
     {
       name: 'cart-store',
-      version: 2,
+      // version: 2,
     }
   )
 );

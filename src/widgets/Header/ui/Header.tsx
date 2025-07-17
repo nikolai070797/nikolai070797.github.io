@@ -31,6 +31,7 @@ const Header = () => {
             <NavLink to="/cart">{t("pages.cart.title")}</NavLink>
             <NavLink to="/product">{t("pages.product.title")}</NavLink>
             <NavLink to="/examples">{t("pages.examples.title")}</NavLink>
+            <NavLink to="/login">{t("pages.login.title")}</NavLink>
           </Box>
 
           <Box className={s.actionsContainer}>
