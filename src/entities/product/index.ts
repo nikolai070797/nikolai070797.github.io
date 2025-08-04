@@ -1,6 +1,7 @@
 export type { Product } from "./model/Product"
 export type { ProductPreview } from "./model/ProductPreview"
-
+export type { ProductFilters } from "./model/ProductFilters"
+export type { ProductParams } from "./model/ProductParams"
 
 // // Пример использования
 // const product: Product = {
