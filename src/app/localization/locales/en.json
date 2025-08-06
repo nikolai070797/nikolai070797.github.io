@@ -1,6 +1,6 @@
 {
   "app": { "title": "Nikolay Tartyshnyi" },
-  "nav": { "logout": "Log out" },
+  "nav": { "logout": "Log out", "login": "Login" },
   "components": {
     "theme": { "title": "Theme", "type": { "system": "System", "light": "Light", "dark": "Dark" } },
     "modal": { "placeholder": "This text will be displayed in a modal window", "header": "Header" },
@@ -29,7 +29,8 @@
       "register": "Register",
       "email": "Email",
       "password": "Password",
-      "confirmPassword": "Confirm password"
+      "confirmPassword": "Confirm password",
+      "loading": "Loading..."
     }
   },
   "pages": {
@@ -67,6 +68,21 @@
       "invalid_email": "Must be a valid email address",
       "invalid_phone": "Phone is required",
       "invalid_about": "About must be at least {{length}} characters"
+    },
+    "server": {
+      "ERR_INCORRECT_EMAIL_OR_PASSWORD": "Incorrect email or password",
+      "ERR_ACCOUNT_ALREADY_EXIST": "A user with this email already exists",
+      "ERR_FIELD_REQUIRED": "The {{fieldName}} field is required",
+      "ERR_INCORRECT_PASSWORD": "Incorrect current password",
+      "ERR_INVALID_PASSWORD": "Password must be at least 8 characters long and include letters, numbers, and special characters",
+      "ERR_NOT_VALID": "Invalid entity identifier",
+      "ERR_AUTH": "Authorization error. Token is missing or invalid",
+      "ERR_NO_FILES": "File upload error",
+      "ERR_NOT_ALLOWED": "Insufficient permissions to perform the operation",
+      "ERR_NOT_FOUND": "Requested entity not found",
+      "ERR_VALIDATION_ERROR": "Invalid form data",
+      "ERR_INVALID_QUERY_PARAMS": "Invalid query parameters",
+      "ERR_INTERNAL_SERVER": "Internal server error. Please contact the administrator"
     }
   }
 }

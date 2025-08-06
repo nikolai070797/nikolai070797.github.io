@@ -2,6 +2,7 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 import Header from '@widgets/Header';
 import Footer from '@shared/ui/footer';
 import { Box } from '@mui/material';
+import { RequireAuth } from '@shared/lib/RequireAuth';
 
 const MainLayout = () => {
   return (
@@ -14,13 +15,15 @@ const MainLayout = () => {
         <Links />
       </head>
       <body>
-        <Header />
+        <RequireAuth>
+          <Header />
 
-        <Box sx={{ mt: '64px', p: 2 }}>
-          <Outlet />
-          <Box sx={{ height: 1000 }} />
-        </Box>
-        <Footer />
+          <Box sx={{ mt: '64px', p: 2 }}>
+            <Outlet />
+            <Box sx={{ height: 1000 }} />
+          </Box>
+          <Footer />
+        </RequireAuth>
         <ScrollRestoration />
         <Scripts />
       </body>

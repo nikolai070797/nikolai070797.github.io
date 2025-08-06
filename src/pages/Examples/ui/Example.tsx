@@ -6,10 +6,11 @@ import { useTranslation } from 'react-i18next';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import { AuthForm, ProductForm } from '@features/forms';
-import { Category } from '@shared/types';
+import { ProductForm } from '@features/forms';
 import { fetchCategories } from '@shared/api/categories';
-import { ClientForm } from '@features/forms/ClientForm';
+import { ClientForm, ClientFormValues } from '@features/forms/ClientForm';
+import { Category } from '@entities/category';
+import { AuthForm } from '@features/auth';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -102,7 +103,11 @@ const ExamplePage = () => {
         <AuthForm />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <ClientForm />
+        <ClientForm
+          onSubmit={function (data: ClientFormValues): void {
+            console.log(data);
+          }}
+        />
       </TabPanel>
     </Box>
   );
