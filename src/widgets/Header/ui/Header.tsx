@@ -11,10 +11,12 @@ import s from './Header.module.scss';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import ToggleLocalization from '@shared/ui/ToggleLocalization/ToggleLocalization';
+import { useAuthStore } from '@features/auth/model/authStore';
 
 
 const Header = () => {
   const { t } = useTranslation();
+  const { token } = useAuthStore();
 
   return (
     <Box className={s.headerContainer}>
@@ -31,7 +33,6 @@ const Header = () => {
             <NavLink to="/cart">{t("pages.cart.title")}</NavLink>
             <NavLink to="/product">{t("pages.product.title")}</NavLink>
             <NavLink to="/examples">{t("pages.examples.title")}</NavLink>
-            <NavLink to="/login">{t("pages.login.title")}</NavLink>
           </Box>
 
           <Box className={s.actionsContainer}>

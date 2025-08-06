@@ -1,5 +1,6 @@
 
-export type { ChangePasswordBody } from "./models/ChangePasswordBody"
-export type { ChangePasswordResult } from "./models/ChangePasswordResult"
-export type { Profile } from "./models/Profile"
-export type { UpdateProfileBody } from "./models/UpdateProfileBody"
+export type { ChangePasswordBody } from "./model/ChangePasswordBody"
+export type { ChangePasswordResult } from "./model/ChangePasswordResult"
+export type { Profile } from "./model/Profile"
+export type { UpdateProfileBody } from "./model/UpdateProfileBody"
+export { profileApi } from "./api/profileApi"

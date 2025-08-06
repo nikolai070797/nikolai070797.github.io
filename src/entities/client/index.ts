@@ -1,1 +1,1 @@
-export type { Client } from "./models/Client"
+export type { Client } from "./model/Client"

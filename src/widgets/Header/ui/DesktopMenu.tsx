@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import IconButton from '@mui/material/IconButton';
 import { MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import NavLink from '@shared/ui/NavLink';
+import { ProfileControl } from '@features/auth/ui/ProfileControl';
+import { useAuthStore } from '@features/auth';
+import { useProfileStore } from '@features/profile/model/profileStore';
 
 const DesktopMenu = () => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const isMenuOpen = Boolean(anchorEl);
+  const { logout } = useAuthStore();
+  const { clearProfile } = useProfileStore();
 
   const handleProfileMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -20,22 +23,22 @@ const DesktopMenu = () => {
     setAnchorEl(null);
   };
 
-  return (
-    
-    <>
-      <IconButton size="large" edge="end" color="inherit" aria-label="account" onClick={handleProfileMenuOpen}>
-        <AccountCircle />
-      </IconButton>
+  const handleLogOut = async () => {
+    logout();
+    clearProfile();
+    handleMenuClose();
+  };
 
-      <Menu
-        anchorEl={anchorEl}
-        open={isMenuOpen}
-        onClose={handleMenuClose}
-        keepMounted
-      >
-        <NavLink onClick={handleMenuClose} to="/profile">{t("pages.profile.title")}</NavLink>
-        {/* <MenuItem onClick={handleMenuClose}  >{t("pages.profile.title")}</MenuItem> */}
-        <MenuItem onClick={handleMenuClose}>{t("nav.logout")}</MenuItem>
+  return (
+    <>
+      <MenuItem>
+        <ProfileControl onProfileClick={handleProfileMenuOpen} />
+      </MenuItem>
+      <Menu anchorEl={anchorEl} open={isMenuOpen} onClose={handleMenuClose} keepMounted>
+        <NavLink onClick={handleMenuClose} to="/profile">
+          {t('pages.profile.title')}
+        </NavLink>
+        <MenuItem onClick={handleLogOut}>{t('nav.logout')}</MenuItem>
       </Menu>
     </>
   );

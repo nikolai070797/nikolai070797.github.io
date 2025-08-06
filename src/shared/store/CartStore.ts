@@ -1,8 +1,8 @@
 import { Product } from '@entities/product';
+import { shared } from 'use-broadcast-ts';
 import { create } from 'zustand';
-import { persistNSync } from 'persist-and-sync';
+import { persist } from 'zustand/middleware';
 
-// Тип элемента корзины: хранит только ID и количество
 type CartItemStoreProps = {
   productId: string;
   quantity: number;
@@ -11,18 +11,16 @@ type CartItemStoreProps = {
 export type CartStoreProps = {
   cartItems: CartItemStoreProps[];
 
-  // Методы для работы с корзиной
   addProduct: (product: Product) => void;
   decrementProduct: (productId: string) => void;
   removeProduct: (productId: string) => void;
   clear: () => void;
 
-  // Новый метод для установки количества товара
   setQuantity: (productId: string, quantity: number) => void;
 };
 
 export const useCartStore = create<CartStoreProps>()(
-  persistNSync(
+  shared(persist(
     (set) => ({
       cartItems: [],
 
@@ -66,7 +64,6 @@ export const useCartStore = create<CartStoreProps>()(
 
       clear: () => set({ cartItems: [] }),
 
-      // Новый метод: установка конкретного количества товара
       setQuantity: (productId, quantity) =>
         set((state) => {
           if (quantity <= 0) {
@@ -85,12 +82,11 @@ export const useCartStore = create<CartStoreProps>()(
     }),
     {
       name: 'cart-store',
-      // version: 2,
+      version: 2,
     }
-  )
+  ))
 );
 
-// Хук для получения общего количества товаров в корзине
 export const useCartCount = () => {
   const { cartItems } = useCartStore();
   return cartItems.reduce((total, item) => total + item.quantity, 0);
