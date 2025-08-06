@@ -13,13 +13,11 @@ export default cartButtonAdd;
 type Story = StoryObj<typeof CartButtonAdd>;
 
 export const Empty: Story = {
-  args: {
-    count: 0,
-  },
+
 };
 
-export const WithCount: Story = {
-  args: {
-    count: 1,
-  },
-};
+// export const WithCount: Story = {
+//   args: {
+//     count: 1,
+//   },
+// };

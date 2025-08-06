@@ -13,7 +13,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Category } from '@shared/types';
+import { Category } from '@entities/category';
 import { Product } from '@entities/product';
 
 export type ProductFormProps = {

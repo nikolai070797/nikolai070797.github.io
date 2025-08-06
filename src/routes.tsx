@@ -5,9 +5,9 @@ export default [
     route("cart", "pages/cart/index.ts"),
     route("modal", "pages/modal/index.ts"),
     route("product", "pages/product/index.ts"),
-    route("examples", "pages/examples/index.ts"),
-    route("login", "pages/login/index.ts"),
-    route("profile", "pages/profile/index.ts"),
+    route("examples", "pages/Examples/index.ts"),
+    route("login", "pages/Login/index.ts"),
+    route("profile", "pages/Profile/index.ts"),
     // route("about", "pages/About.tsx", [
     //     route("team", "pages/Team.tsx"), // Вложенный маршрут `/about/team`
     // ]),

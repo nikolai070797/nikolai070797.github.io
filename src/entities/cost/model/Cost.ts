@@ -1,4 +1,4 @@
-import { Category } from "@shared/types";
+import { Category } from "@entities/category";
 
 export type Cost = {
   id: string;

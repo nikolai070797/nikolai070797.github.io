@@ -6,7 +6,7 @@ import productsMock from '@shared/api/mock/products.json';
 export const fetchProductsById = async (productsId: string[]): Promise<Product[] | undefined> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const product = productsMock.filter((p) => productsId.includes(p.id));
+      const product = productsMock.filter((p) => productsId.includes(p.id)) as Product[];
       resolve(product);
     }, 0);
   });
@@ -18,7 +18,7 @@ export const fetchProducts = async (page: number, count: number): Promise<Produc
       const products: Product[] = [];
       for (let i = 1; i <= count; i++) {
         const randomIndex = Math.floor(Math.random() * productsMock.length);
-        products.push(productsMock[randomIndex]);
+        products.push(productsMock[randomIndex] as Product);
       }
       resolve(products);
     }, 0);
