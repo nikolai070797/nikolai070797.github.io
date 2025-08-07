@@ -141,6 +141,9 @@ export const useAuthStore = create<UserState>()(
           isHydrated: state.isHydrated,
         }), // Сохраняем только токен
       }
-    )
+    ),
+    {
+      name: 'auth-storage',
+    }
   )
 );

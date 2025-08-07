@@ -137,6 +137,9 @@ export const useProfileStore = create<ProfileState>()(
           profile: state.profile,
         }), // Сохраняем только профиль
       }
-    )
+    ),
+    {
+      name: 'profile-storage',
+    }
   )
 );
