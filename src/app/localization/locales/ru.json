@@ -36,8 +36,8 @@
   "pages": {
     "home": { "title": "Домашняя страница" },
     "modal": { "title": "Модальное окно" },
-    "cart": { "title": "Корзина", "empty": "Корзина пуста", "clear": "Очистить корзину", "showMore": "Показать ещё" },
-    "product": { "title": "Продукт" },
+    "cart": { "title": "Корзина", "empty": "Корзина пуста", "clear": "Очистить корзину", "showMore": "Показать ещё", "total": "Итого" },
+    "product": { "title": "Каталог" },
     "profile": {
       "title": "Профиль",
       "updateProfile": {

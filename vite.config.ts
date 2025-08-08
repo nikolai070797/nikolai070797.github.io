@@ -49,7 +49,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        assetFileNames: (assetInfo) => {
+        assetFileNames: (assetInfo: { name: any; }) => {
           const { name } = assetInfo;
           if (name?.endsWith('.json') && name.includes('locales')) {
             return 'locales/[name][extname]';

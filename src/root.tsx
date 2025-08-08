@@ -8,29 +8,36 @@ import { ThemeProvider as AppThemeProvider, MuiThemeProviderWrapper, useAppTheme
 import { LocalizationInitiator } from '@app/localization/LocalizationInitiator';
 
 import { AxiosInterceptor } from '@app/axiosConfig';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
     <React.StrictMode>
-      <StyledEngineProvider injectFirst>
-        <AppThemeProvider>
-          <MuiThemeProviderWrapper>
-            <SnackbarProvider
-              maxSnack={5}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-            >
-              <LocalizationInitiator />
-              <CssBaseline />
-              <AxiosInterceptor>
-                <Layout />
-              </AxiosInterceptor>
-            </SnackbarProvider>
-          </MuiThemeProviderWrapper>
-        </AppThemeProvider>
-      </StyledEngineProvider>
+      <QueryClientProvider client={queryClient}>
+        <StyledEngineProvider injectFirst>
+          <AppThemeProvider>
+            <MuiThemeProviderWrapper>
+              <SnackbarProvider
+                maxSnack={5}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+              >
+                <LocalizationInitiator />
+                <CssBaseline />
+                <AxiosInterceptor>
+                  <Layout />
+                </AxiosInterceptor>
+              </SnackbarProvider>
+            </MuiThemeProviderWrapper>
+          </AppThemeProvider>
+        </StyledEngineProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </React.StrictMode>
   );
 }

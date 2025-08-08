@@ -1,140 +1,106 @@
-import { Product, ProductFilters, ProductPreview } from '@entities/product';
-import { productApi } from '@entities/product/api/productApi';
+import React, { useState, useMemo, useEffect } from 'react';
+import {
+  Box,
+  CircularProgress,
+  Grid,
+  Pagination,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+  TextField,
+} from '@mui/material';
+import { useDebounce } from 'use-debounce';
+import { useQuery, QueryFunctionContext, keepPreviousData } from '@tanstack/react-query';
+import { PreviewMini } from '@shared/ui/product';
 import { ProductList } from '@features/ProductList';
-import { Card, Grid, CircularProgress, Box, Pagination, Select, MenuItem, FormControl, InputLabel, SelectChangeEvent, TextField } from '@mui/material';
-import { PreviewFull, PreviewMini } from '@shared/ui/product';
-import { useEffect, useState } from 'react';
-import { json } from 'stream/consumers';
+import { productApi } from '@entities/product/api/productApi';
+import { ProductFilters, ProductsResult, Product } from '@entities/product';
 
-const ProductPage = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+const PAGE_SIZE = 10;
+
+const ProductPage: React.FC = () => {
+  // управляющие состояния
+  const [page, setPage] = useState(1);
   const [sortField, setSortField] = useState<'createdAt' | 'updatedAt' | 'name' | 'id'>('createdAt');
   const [sortType, setSortType] = useState<'ASC' | 'DESC'>('DESC');
-  const [searchName, setSearchName] = useState<string>('');
-  const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(null);
-  
-  const PAGE_SIZE = 10;
+  const [search, setSearch] = useState('');
+  const [debouncedSearch] = useDebounce(search, 300);
 
-  const loadProducts = async (filters: ProductFilters) => {
-    try {
-      setLoading(true);
-      const response = await productApi.getProducts(filters);
-      setProducts(response.data);
-      setTotalPages(response.pagination.total || 1); 
-    } catch (error) {
-      console.error('Failed to load products:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // мемо-фильтры
+  const filters = useMemo<ProductFilters>(
+    () => ({
+      pagination: { pageSize: PAGE_SIZE, pageNumber: page },
+      sorting: { field: sortField, type: sortType },
+      ...(debouncedSearch ? { name: debouncedSearch } : {}),
+    }),
+    [page, sortField, sortType, debouncedSearch]
+  );
 
-  useEffect(() => {
-    const filters: ProductFilters = {
-      pagination: {
-        pageSize: PAGE_SIZE,
-        pageNumber: currentPage,
-      },
-      sorting: {
-        field: sortField,
-        type: sortType,
-      },
-    };
+  const {
+    data: productsResult,
+    isLoading,
+    isError,
+    error,
+    isFetching,
+  } = useQuery<ProductsResult, Error, ProductsResult, ['products', ProductFilters]>({
+    queryKey: ['products', filters],
+    queryFn: ({ signal }: QueryFunctionContext<['products', ProductFilters]>) => productApi.list(filters, { signal }),
+    placeholderData: keepPreviousData,
+    staleTime: 60_000,
+  });
 
-    // Добавляем поиск по имени, если он есть
-    if (searchName.trim()) {
-      filters.name = JSON.stringify(searchName.trim());
-    }
-    
-    loadProducts(filters);
-  }, [currentPage, sortField, sortType, searchName]);
+  const items: Product[] = productsResult?.data ?? [];
+  const totalItems = productsResult?.pagination.total ?? 0;
+  const totalPages = Math.ceil(totalItems / PAGE_SIZE) || 1;
 
-  const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
-    setCurrentPage(page);
+  // хэндлеры
+  const handlePageChange = (_: unknown, newPage: number) => {
+    setPage(newPage);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  const handleSortFieldChange = (event: SelectChangeEvent) => {
-    setSortField(event.target.value as any);
-    setCurrentPage(1);
+  const handleSortFieldChange = (e: SelectChangeEvent<'createdAt' | 'updatedAt' | 'name' | 'id'>) => {
+    setSortField(e.target.value);
+    setPage(1);
   };
-
-  const handleSortTypeChange = (event: SelectChangeEvent) => {
-    setSortType(event.target.value as any);
-    setCurrentPage(1);
+  const handleSortTypeChange = (e: SelectChangeEvent<'ASC' | 'DESC'>) => {
+    setSortType(e.target.value);
+    setPage(1);
   };
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    
-    // Очищаем предыдущий таймаут
-    if (searchTimeout) {
-      clearTimeout(searchTimeout);
-    }
-    
-    // Устанавливаем новый таймаут для debounce
-    const newTimeout = setTimeout(() => {
-      setSearchName(value);
-      setCurrentPage(1); // Сбрасываем на первую страницу при поиске
-    }, 300);
-    
-    setSearchTimeout(newTimeout);
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    setPage(1);
   };
-
   const handleClearSearch = () => {
-    setSearchName('');
-    setCurrentPage(1);
+    setSearch('');
+    setPage(1);
   };
-
-  // Показываем лоадер только при первой загрузке
-  if (loading && products.length === 0) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box width="100%">
       {/* Панель управления */}
-      <Box sx={{ display: 'flex', gap: 2, mb: 2, flexWrap: 'wrap', alignItems: 'center' }}>
-        {/* Поиск по имени */}
+      <Box display="flex" gap={2} mb={2} flexWrap="wrap" alignItems="center">
         <TextField
           label="Поиск по названию"
-          variant="outlined"
           size="small"
-          value={searchName}
+          value={search}
           onChange={handleSearchChange}
-          sx={{ minWidth: 200 }}
-          placeholder="Введите название товара..."
-          InputProps={{
-            endAdornment: searchName ? (
-              <button 
-                onClick={handleClearSearch}
-                style={{ 
-                  background: 'none', 
-                  border: 'none', 
-                  cursor: 'pointer', 
-                  fontSize: '18px',
-                  padding: '0 5px'
-                }}
-              >
-                ×
-              </button>
-            ) : null
+          placeholder="Введите название..."
+          slotProps={{
+            input: {
+              endAdornment: search && (
+                <Box component="span" sx={{ cursor: 'pointer', px: 1 }} onClick={handleClearSearch}>
+                  ×
+                </Box>
+              ),
+            },
           }}
         />
 
-        <FormControl size="small" sx={{ minWidth: 120 }}>
-          <InputLabel>Сортировать по</InputLabel>
-          <Select
-            value={sortField}
-            label="Сортировать по"
-            onChange={handleSortFieldChange}
-          >
+        <FormControl size="small">
+          <InputLabel id="sort-field-label">Сортировка</InputLabel>
+          <Select labelId="sort-field-label" value={sortField} label="Сортировка" onChange={handleSortFieldChange}>
             <MenuItem value="createdAt">Дата создания</MenuItem>
             <MenuItem value="updatedAt">Дата обновления</MenuItem>
             <MenuItem value="name">Название</MenuItem>
@@ -142,43 +108,45 @@ const ProductPage = () => {
           </Select>
         </FormControl>
 
-        <FormControl size="small" sx={{ minWidth: 120 }}>
-          <InputLabel>Порядок</InputLabel>
-          <Select
-            value={sortType}
-            label="Порядок"
-            onChange={handleSortTypeChange}
-          >
+        <FormControl size="small">
+          <InputLabel id="sort-type-label">Порядок</InputLabel>
+          <Select labelId="sort-type-label" value={sortType} label="Порядок" onChange={handleSortTypeChange}>
             <MenuItem value="ASC">По возрастанию</MenuItem>
             <MenuItem value="DESC">По убыванию</MenuItem>
           </Select>
         </FormControl>
       </Box>
 
-      {/* Список продуктов */}
-      {loading ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px', my: 2 }}>
+      {/* Основной контент */}
+      {isError ? (
+        <Box>Ошибка при загрузке продуктов</Box>
+      ) : isLoading ? (
+        <Box display="flex" justifyContent="center" alignItems="center" height={200}>
           <CircularProgress />
         </Box>
       ) : (
         <>
+          {/* Список товаров */}
           <Grid
             container
             spacing={2}
             sx={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill,minmax(min-content,352px))',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(min-content, 352px))',
             }}
           >
-            <ProductList products={products} renderItem={(product) => <PreviewMini product={product} />} />
+            <ProductList
+              products={items}
+              renderItem={(product) => <PreviewMini key={product.id} product={product} />}
+            />
           </Grid>
 
           {/* Пагинация */}
           {totalPages > 1 && (
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3, mb: 2 }}>
+            <Box display="flex" justifyContent="center" mt={3} mb={2}>
               <Pagination
                 count={totalPages}
-                page={currentPage}
+                page={page}
                 onChange={handlePageChange}
                 color="primary"
                 showFirstButton
@@ -186,6 +154,13 @@ const ProductPage = () => {
                 siblingCount={1}
                 boundaryCount={1}
               />
+            </Box>
+          )}
+
+          {/* Индикатор фоновой загрузки */}
+          {isFetching && !isLoading && (
+            <Box textAlign="center" mt={1}>
+              Обновление...
             </Box>
           )}
         </>

@@ -36,8 +36,8 @@
   "pages": {
     "home": { "title": "Home" },
     "modal": { "title": "Modal" },
-    "cart": { "title": "Cart", "empty": "Cart is empty", "clear": "Clear Cart", "showMore": "Show more" },
-    "product": { "title": "Product" },
+    "cart": { "title": "Cart", "empty": "Cart is empty", "clear": "Clear Cart", "showMore": "Show more", "total": "Total" },
+    "product": { "title": "Catalog" },
     "profile": {
       "title": "Profile",
       "updateProfile": {

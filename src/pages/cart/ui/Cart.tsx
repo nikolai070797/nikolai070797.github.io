@@ -1,51 +1,90 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useMemo, useCallback } from 'react';
+import { Box, Button, CircularProgress, Grid, Stack, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ProductList } from '@features/ProductList';
-import { fetchProducts, fetchProductsById } from '@shared/api/products';
-import { Product } from '@entities/product';
-import { Button, Stack, CircularProgress, Typography } from '@mui/material';
+import { useQuery, QueryFunctionContext, keepPreviousData } from '@tanstack/react-query';
+import { productApi } from '@entities/product/api/productApi';
+import { Product, ProductFilters, ProductsResult } from '@entities/product';
 import { CartItem } from '@shared/ui/cart';
 import { useCartStore } from '@shared/store';
-import { productApi } from '@entities/product/api/productApi';
+import { ProductList } from '@features/ProductList';
+import Price from '@shared/ui/price';
 
-const CartPage = () => {
+const CartPage: React.FC = () => {
   const { cartItems, removeProduct, clear } = useCartStore();
   const { t } = useTranslation();
-  const [products, setProducts] = useState<Product[]>([]);
 
-  // Загружаем полную информацию о продуктах при изменении cartItems
-  useEffect(() => {
-    const loadProducts = async () => {
-      const productIds = cartItems.map((item) => item.productId);
-      const productsResult = await productApi.getProducts({ ids: productIds });
-      if (productsResult) setProducts(productsResult.data);
-    };
+  // IDs текущих товаров в корзине
+  const ids = useMemo<string[]>(() => cartItems.map((item) => item.productId), [cartItems]);
 
-    loadProducts();
-  }, [cartItems]);
+  // Запрос на получение товаров по ID
+  const {
+    data: productsResult,
+    isLoading,
+    isError,
+    error,
+    isFetching,
+  } = useQuery<ProductsResult, Error, ProductsResult, ['products', ProductFilters]>({
+    queryKey: ['products', { ids }],
+    queryFn: ({ signal }: QueryFunctionContext<['products', ProductFilters]>) => productApi.list({ ids }, { signal }),
+    placeholderData: keepPreviousData,
+    staleTime: 60_000,
+  });
 
-  const getHandleRemove = useCallback(
-    (id: string) => () => {
-      removeProduct(id);
-    },
-    [removeProduct]
-  );
+  const products: Product[] = productsResult?.data ?? [];
+
+  // Расчёт общей суммы
+  const total = useMemo<number>(() => {
+    return cartItems.reduce<number>((sum, cartItem) => {
+      const prod = products.find((p) => p.id === cartItem.productId);
+      return sum + (prod?.price ?? 0) * cartItem.quantity;
+    }, 0);
+  }, [cartItems, products]);
+
+  const handleRemove = useCallback((id: string) => removeProduct(id), [removeProduct]);
+
+  if (cartItems.length === 0) {
+    return (
+      <Box p={2}>
+        <Typography variant="h4" gutterBottom>
+          {t('pages.cart.title')}
+        </Typography>
+        <Typography>{t('pages.cart.empty')}</Typography>
+      </Box>
+    );
+  }
 
   return (
-    <>
-      <Typography variant="h4">{t('pages.cart.title')}</Typography>
-      {cartItems.length === 0 ? (
-        <Typography>{t('pages.cart.empty')}</Typography>
+    <Box p={2}>
+      <Stack direction="row" justifyContent="space-between" mb={2} alignItems="center">
+        <Typography variant="h4">{t('pages.cart.title')}</Typography>
+        <Button variant="outlined" onClick={clear} disabled={isFetching}>
+          {t('pages.cart.clear')}
+        </Button>
+      </Stack>
+
+      {isLoading ? (
+        <Box display="flex" justifyContent="center" alignItems="center" height={200}>
+          <CircularProgress />
+        </Box>
+      ) : isError ? (
+        <Typography color="error">{error.message}</Typography>
       ) : (
         <>
-          <Button onClick={clear}>{t('pages.cart.clear')}</Button>
+          <Stack spacing={2}>
             <ProductList
               products={products}
-              renderItem={(product) => <CartItem product={product} onRemove={getHandleRemove(product.id)} />}
+              renderItem={(product) => <CartItem product={product} onRemove={() => handleRemove(product.id)} />}
             />
+          </Stack>
+
+          <Box mt={3} display="flex" justifyContent="flex-end">
+            <Typography variant="h6">
+              {t('pages.cart.total')}: <Price price={total} />
+            </Typography>
+          </Box>
         </>
       )}
-    </>
+    </Box>
   );
 };
 
