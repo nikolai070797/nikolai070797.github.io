@@ -1,1 +1,0 @@
-import{p as o,y as s}from"./chunk-C37GKA54-PmDymV9p.js";import{u as e}from"./useTranslation-CT2sYqrC.js";const n=()=>{const{t}=e("translation",{keyPrefix:"pages.home"});return o.jsx("h1",{children:t("title")})},i=()=>{const{t}=e("translation",{keyPrefix:"pages.home"});return[{title:t("title")}]},m=s(n);export{m as default,i as meta};
