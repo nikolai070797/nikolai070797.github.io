@@ -6,6 +6,7 @@ import { Product } from '@entities/product';
 import { Button, Stack, CircularProgress, Typography } from '@mui/material';
 import { CartItem } from '@shared/ui/cart';
 import { useCartStore } from '@shared/store';
+import { productApi } from '@entities/product/api/productApi';
 
 const CartPage = () => {
   const { cartItems, removeProduct, clear } = useCartStore();
@@ -16,8 +17,8 @@ const CartPage = () => {
   useEffect(() => {
     const loadProducts = async () => {
       const productIds = cartItems.map((item) => item.productId);
-      const productsData = await fetchProductsById(productIds);
-      if (productsData) setProducts(productsData);
+      const productsResult = await productApi.getProducts({ ids: productIds });
+      if (productsResult) setProducts(productsResult.data);
     };
 
     loadProducts();
@@ -38,12 +39,10 @@ const CartPage = () => {
       ) : (
         <>
           <Button onClick={clear}>{t('pages.cart.clear')}</Button>
-          <Stack spacing={2}>
             <ProductList
               products={products}
               renderItem={(product) => <CartItem product={product} onRemove={getHandleRemove(product.id)} />}
             />
-          </Stack>
         </>
       )}
     </>

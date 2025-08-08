@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Product } from '@entities/product';
-import { Card } from '@mui/material';
+import { Box, Card, Grid } from '@mui/material';
 
 export type ProductListProps = {
   products: Product[];
@@ -37,12 +37,12 @@ const ProductList = ({ products, onLoadMore, renderItem }: ProductListProps) => 
 
   return (
     <>
-      {products.map((product) => (
-        <Card key={product.id} sx={{ height: 'fit-content' }}>
-          {renderItem(product)}
-        </Card>
+      {products?.map((product) => (
+        <Grid key={product.id} >
+          <Card>{renderItem(product)}</Card>
+        </Grid>
       ))}
-      {/* Sentinel для отслеживания прокрутки */} 
+      {/* Sentinel для отслеживания прокрутки */}
       <div ref={sentinelRef} style={{ height: '20px' }} />
     </>
   );

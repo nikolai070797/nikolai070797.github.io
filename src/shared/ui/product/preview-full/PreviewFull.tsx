@@ -39,15 +39,17 @@ const PreviewFull = memo(({ product }: PreviewFullProps) => {
           </Box>
         </ListItem>
       </List>
-      <Box>
-        <ListItem>
-          <Chip
-            id={product.category.id}
-            avatar={<Avatar alt={product.category.name} src={product.category.photo} />}
-            label={product.category.name}
-          />
-        </ListItem>
-      </Box>
+      {product.category && (
+        <Box>
+          <ListItem>
+            <Chip
+              id={product.category.id}
+              avatar={<Avatar alt={product.category.name} src={product.category.photo} />}
+              label={product.category.name}
+            />
+          </ListItem>
+        </Box>
+      )}
     </Box>
   );
 });

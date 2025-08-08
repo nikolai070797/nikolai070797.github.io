@@ -1,4 +1,4 @@
-export type { Product } from "./model/Product"
+export type { Product, ProductPatch } from "./model/Product"
 export type { ProductPreview } from "./model/ProductPreview"
 export type { ProductFilters } from "./model/ProductFilters"
 export type { ProductParams } from "./model/ProductParams"
