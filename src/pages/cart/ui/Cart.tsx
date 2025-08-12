@@ -6,8 +6,8 @@ import { productApi } from '@entities/product/api/productApi';
 import { Product, ProductFilters, ProductsResult } from '@entities/product';
 import { CartItem } from '@shared/ui/cart';
 import { useCartStore } from '@shared/store';
-import { ProductList } from '@features/ProductList';
 import Price from '@shared/ui/price';
+import { List } from '@shared/ui/list';
 
 const CartPage: React.FC = () => {
   const { cartItems, removeProduct, clear } = useCartStore();
@@ -71,8 +71,8 @@ const CartPage: React.FC = () => {
       ) : (
         <>
           <Stack spacing={2}>
-            <ProductList
-              products={products}
+            <List
+              items={products}
               renderItem={(product) => <CartItem product={product} onRemove={() => handleRemove(product.id)} />}
             />
           </Stack>

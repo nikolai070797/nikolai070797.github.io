@@ -10,7 +10,7 @@ export const RequireAuth = ({ children }: RequireAuthProps) => {
   const location = useLocation();
 
   // Пути, доступные без авторизации
-  const publicPaths = ['/', '/login', '/about', '/team', '/examples', '/product', '/modal', '/cart'];
+  const publicPaths = ['/', '/login', '/about', '/team', '/examples', '/product', '/modal', '/cart', '/category'];
   const isPublicPath = publicPaths.includes(location.pathname);
 
   if (!isPublicPath && !token) {

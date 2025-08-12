@@ -15,7 +15,45 @@
       "oldPrice": "Старая цена",
       "price": "Цена",
       "category": "Категория",
-      "submit": "Сохранить"
+      "submit": "Сохранить",
+      "addProduct": "Добавить продукт",
+      "editProduct": "Редактировать продукт",
+      "createProduct": "Создать новый продукт",
+      "update": "Обновить",
+      "create": "Создать",
+      "confirmDelete": "Подтвердите удаление",
+      "confirmDeleteMessage": "Вы уверены, что хотите удалить продукт \"{{name}}\"? Это действие нельзя отменить.",
+      "cancel": "Отмена",
+      "delete": "Удалить",
+      "edit": "Изменить",
+      "updating": "Обновление...",
+      "createdAt": "Дата создания",
+      "updatedAt": "Дата обновления",
+      "sortOrder": "Порядок",
+      "ascending": "По возрастанию",
+      "descending": "По убыванию"
+    },
+    "category": {
+      "name": "Название",
+      "photo": "Фото (URL)",
+      "create": "Создать",
+      "update": "Обновить",
+      "invalid_name": "Название обязательно",
+      "invalid_photo": "Неверный URL фото",
+      "addCategory": "Добавить категорию",
+      "editCategory": "Редактировать категорию",
+      "createCategory": "Создать новую категорию",
+      "confirmDelete": "Подтвердите удаление",
+      "confirmDeleteMessage": "Вы уверены, что хотите удалить категорию \"{{name}}\"? Это действие нельзя отменить.",
+      "cancel": "Отмена",
+      "delete": "Удалить",
+      "edit": "Изменить",
+      "updating": "Обновление...",
+      "createdAt": "Дата создания",
+      "updatedAt": "Дата обновления",
+      "sortOrder": "Порядок",
+      "ascending": "По возрастанию",
+      "descending": "По убыванию"
     },
     "client": {
       "name": "Имя",
@@ -38,6 +76,7 @@
     "modal": { "title": "Модальное окно" },
     "cart": { "title": "Корзина", "empty": "Корзина пуста", "clear": "Очистить корзину", "showMore": "Показать ещё", "total": "Итого" },
     "product": { "title": "Каталог" },
+    "category": { "title": "Категории" },
     "profile": {
       "title": "Профиль",
       "updateProfile": {
@@ -52,6 +91,7 @@
   },
   "errors": {
     "LoadingProducts": "Ошибка загрузки товаров",
+    "LoadingCategories": "Ошибка загрузки категорий",
     "auth": {
       "invalid_email": "Неверный адрес электронной почты",
       "invalid_password": "Пароль должен содержать не менее {{length}} символов",
@@ -63,6 +103,10 @@
       "invalid_oldPrice_min": "Цена должна быть положительной",
       "invalid_price": "Цена должна быть положительной",
       "invalid_category": "Категория обязательна"
+    },
+    "category": {
+      "invalid_name": "Название обязательно",
+      "invalid_photo": "Должен быть допустимым URL"
     },
     "client": {
       "invalid_name": "Имя обязательно",

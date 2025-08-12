@@ -20,19 +20,17 @@ import {
 import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useDebounce } from 'use-debounce';
 import { useQuery, useQueryClient, QueryFunctionContext, keepPreviousData, useMutation } from '@tanstack/react-query';
-import { PreviewFull, PreviewMini } from '@entities/product';
-import { ProductFormModal, ProductActions } from '@features/ProductManagement';
-import { productApi } from '@entities/product/api/productApi';
-import { ProductFilters, ProductsResult, Product, ProductParams } from '@entities/product';
-import { CategoryResult } from '@entities/category';
+import { CategoryActions, CategoryFormModal } from '@features/CategoryManagement';
 import { categoryApi } from '@entities/category/api/categoryApi';
-import { List } from '@shared/ui/list/List';
+import { CategoryFilters, CategoryResult, Category, CategoryParams } from '@entities/category';
+import CategoryPreviewFull from '@entities/category/ui/PreviewFull';
+import { List } from '@shared/ui/list';
 import { useProfileStore } from '@features/profile/model/profileStore';
 import { useTranslation } from 'react-i18next';
 
 const PAGE_SIZE = 10;
 
-const ProductPage: React.FC = () => {
+const CategoryPage: React.FC = () => {
   const { t, i18n } = useTranslation();
   // управляющие состояния
   const [page, setPage] = useState(1);
@@ -43,27 +41,14 @@ const ProductPage: React.FC = () => {
 
   // Состояния для модальных окон и действий
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [productToEdit, setProductToEdit] = useState<Product | null>(null);
-  const [productToDelete, setProductToDelete] = useState<Product | null>(null);
+  const [categoryToEdit, setCategoryToEdit] = useState<Category | null>(null);
+  const [categoryToDelete, setCategoryToDelete] = useState<Category | null>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const { profile } = useProfileStore();
 
-  // Загрузка категорий
-  const {
-    data: categoriesData,
-    isLoading: isCategoriesLoading,
-    isError: isCategoriesError,
-  } = useQuery<CategoryResult, Error, CategoryResult, ['categories']>({
-    queryKey: ['categories'],
-    queryFn: ({ signal }: QueryFunctionContext<['categories']>) => categoryApi.list(undefined, { signal }),
-    staleTime: 5 * 60 * 1000, // 5 минут
-  });
-
-  const categories = categoriesData?.data || [];
-
   // мемо-фильтры
-  const filters = useMemo<ProductFilters>(
+  const filters = useMemo<CategoryFilters>(
     () => ({
       pagination: { pageSize: PAGE_SIZE, pageNumber: page },
       sorting: { field: sortField, type: sortType },
@@ -75,55 +60,55 @@ const ProductPage: React.FC = () => {
   const queryClient = useQueryClient();
 
   const {
-    data: productsResult,
+    data: categoryResult,
     isLoading,
     isError,
     error,
     isFetching,
-  } = useQuery<ProductsResult>({
-    queryKey: ['products', filters, profile],
-    queryFn: ({ signal }) => productApi.list(filters, { signal }),
+  } = useQuery<CategoryResult>({
+    queryKey: ['categories', filters, profile],
+    queryFn: ({ signal }) => categoryApi.list(filters, { signal }),
     placeholderData: keepPreviousData,
     staleTime: 60_000,
   });
 
   // Мутации для CRUD операций
-  const createProductMutation = useMutation({
-    mutationFn: (newProduct: ProductParams) => productApi.create(newProduct),
+  const createCategoryMutation = useMutation({
+    mutationFn: (newCategory: CategoryParams) => categoryApi.create(newCategory),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['products'] });
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
       handleCloseModal();
     },
     onError: (error) => {
-      console.error('Ошибка при создании продукта:', error);
+      console.error('Ошибка при создании категории:', error);
     },
   });
 
-  const updateProductMutation = useMutation({
-    mutationFn: ({ id, ...updateData }: ProductParams & { id: string }) => productApi.update(id, updateData),
-    onSuccess: (updatedProduct) => {
-      queryClient.setQueryData<ProductsResult | undefined>(['products', filters], (old) => {
+  const updateCategoryMutation = useMutation({
+    mutationFn: ({ id, ...updateData }: CategoryParams & { id: string }) => categoryApi.update(id, updateData),
+    onSuccess: (updatedCategory) => {
+      queryClient.setQueryData<CategoryResult | undefined>(['categories', filters], (old) => {
         if (!old) return old;
         return {
           ...old,
-          data: old.data.map((p) => (p.id === updatedProduct.id ? updatedProduct : p)),
+          data: old.data.map((c) => (c.id === updatedCategory.id ? updatedCategory : c)),
         };
       });
       handleCloseModal();
     },
     onError: (error) => {
-      console.error('Ошибка при обновлении продукта:', error);
+      console.error('Ошибка при обновлении категории:', error);
     },
   });
 
-  const deleteProductMutation = useMutation({
-    mutationFn: (id: string) => productApi.delete(id),
+  const deleteCategoryMutation = useMutation({
+    mutationFn: (id: string) => categoryApi.delete(id),
     onSuccess: (_, deletedId) => {
-      queryClient.setQueryData<ProductsResult | undefined>(['products', filters], (old) => {
+      queryClient.setQueryData<CategoryResult | undefined>(['categories', filters], (old) => {
         if (!old) return old;
         return {
           ...old,
-          data: old.data.filter((p) => p.id !== deletedId),
+          data: old.data.filter((c) => c.id !== deletedId),
           pagination: {
             ...old.pagination,
             total: old.pagination.total - 1,
@@ -133,12 +118,12 @@ const ProductPage: React.FC = () => {
       handleCloseDeleteDialog();
     },
     onError: (error) => {
-      console.error('Ошибка при удалении продукта:', error);
+      console.error('Ошибка при удалении категории:', error);
     },
   });
 
-  const items: Product[] = productsResult?.data ?? [];
-  const totalItems = productsResult?.pagination.total ?? 0;
+  const items: Category[] = categoryResult?.data ?? [];
+  const totalItems = categoryResult?.pagination.total ?? 0;
   const totalPages = Math.ceil(totalItems / PAGE_SIZE) || 1;
 
   // хэндлеры
@@ -169,52 +154,43 @@ const ProductPage: React.FC = () => {
 
   // Обработчики модальных окон
   const handleOpenCreateModal = () => {
-    setProductToEdit(null);
+    setCategoryToEdit(null);
     setIsModalOpen(true);
   };
 
-  const handleOpenEditModal = (product: Product) => {
-    setProductToEdit(product);
+  const handleOpenEditModal = (category: Category) => {
+    setCategoryToEdit(category);
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setProductToEdit(null);
+    setCategoryToEdit(null);
   };
 
   // Обработчики удаления
-  const handleOpenDeleteDialog = (product: Product) => {
-    setProductToDelete(product);
+  const handleOpenDeleteDialog = (category: Category) => {
+    setCategoryToDelete(category);
     setIsDeleteDialogOpen(true);
   };
 
   const handleCloseDeleteDialog = () => {
     setIsDeleteDialogOpen(false);
-    setProductToDelete(null);
+    setCategoryToDelete(null);
   };
 
   const handleConfirmDelete = () => {
-    if (productToDelete) {
-      deleteProductMutation.mutate(productToDelete.id);
+    if (categoryToDelete) {
+      deleteCategoryMutation.mutate(categoryToDelete.id);
     }
   };
 
   // Обработчик отправки формы (создание/обновление)
-  const handleFormSubmit = (data: ProductParams) => {
-    if (productToEdit) {
-      updateProductMutation.mutate({ ...data, id: productToEdit.id });
+  const handleFormSubmit = (data: CategoryParams) => {
+    if (categoryToEdit) {
+      updateCategoryMutation.mutate({ ...data, id: categoryToEdit.id });
     } else {
-      createProductMutation.mutate(data);
-    }
-  };
-
-  // Обработчик действий над продуктом
-  const handleProductAction = (product: Product, action: 'edit' | 'delete') => {
-    if (action === 'edit') {
-      handleOpenEditModal(product);
-    } else if (action === 'delete') {
-      handleOpenDeleteDialog(product);
+      createCategoryMutation.mutate(data);
     }
   };
 
@@ -223,11 +199,11 @@ const ProductPage: React.FC = () => {
       {/* Панель управления */}
       <Box display="flex" gap={2} mb={2} flexWrap="wrap" alignItems="center">
         <TextField
-          label={t('components.product.name')}
+          label={t('components.category.name')}
           size="small"
           value={search}
           onChange={handleSearchChange}
-          placeholder={t('pages.product.title')}
+          placeholder={t('pages.category.title')}
           slotProps={{
             input: {
               endAdornment: search && (
@@ -239,58 +215,51 @@ const ProductPage: React.FC = () => {
           }}
         />
         <FormControl size="small">
-          <InputLabel id="sort-field-label">{t('pages.product.title')}</InputLabel>
+          <InputLabel id="sort-field-label">{t('pages.category.title')}</InputLabel>
           <Select
             labelId="sort-field-label"
             value={sortField}
-            label={t('pages.product.title')}
+            label={t('pages.category.title')}
             onChange={handleSortFieldChange}
           >
-            <MenuItem value="createdAt">{t('components.product.createdAt')}</MenuItem>
-            <MenuItem value="updatedAt">{t('components.product.updatedAt')}</MenuItem>
-            <MenuItem value="name">{t('components.product.name')}</MenuItem>
+            <MenuItem value="createdAt">{t('components.category.createdAt')}</MenuItem>
+            <MenuItem value="updatedAt">{t('components.category.updatedAt')}</MenuItem>
+            <MenuItem value="name">{t('components.category.name')}</MenuItem>
             <MenuItem value="id">ID</MenuItem>
           </Select>
         </FormControl>
         <FormControl size="small">
-          <InputLabel id="sort-type-label">{t('components.product.sortOrder')}</InputLabel>
+          <InputLabel id="sort-type-label">{t('components.category.sortOrder')}</InputLabel>
           <Select
             labelId="sort-type-label"
             value={sortType}
-            label={t('components.product.sortOrder')}
+            label={t('components.category.sortOrder')}
             onChange={handleSortTypeChange}
           >
-            <MenuItem value="ASC">{t('components.product.ascending')}</MenuItem>
-            <MenuItem value="DESC">{t('components.product.descending')}</MenuItem>
+            <MenuItem value="ASC">{t('components.category.ascending')}</MenuItem>
+            <MenuItem value="DESC">{t('components.category.descending')}</MenuItem>
           </Select>
         </FormControl>
         {profile && profile.commandId && (
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<AddIcon />}
-            onClick={handleOpenCreateModal}
-            disabled={isCategoriesLoading || isCategoriesError}
-          >
-            {t('components.product.addProduct')}
+          <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={handleOpenCreateModal}>
+            {t('components.category.addCategory')}
           </Button>
         )}
       </Box>
 
       {/* Основной контент */}
-      {isError || isCategoriesError ? (
+      {isError ? (
         <Box>
           {/* Локализация ошибок */}
-          {isError && t('errors.LoadingProducts')}
-          {isCategoriesError && t('errors.LoadingCategories')}
+          {error?.message ? error.message : t('errors.LoadingCategories')}
         </Box>
-      ) : isLoading || isCategoriesLoading ? (
+      ) : isLoading ? (
         <Box display="flex" justifyContent="center" alignItems="center" height={200}>
           <CircularProgress />
         </Box>
       ) : (
         <>
-          {/* Список товаров */}
+          {/* Список категорий */}
           <Grid
             container
             spacing={2}
@@ -301,21 +270,26 @@ const ProductPage: React.FC = () => {
           >
             <List
               items={items}
-              renderItem={(product) => (
-                <Box key={product.id} sx={{ position: 'relative' }}>
-                  <PreviewFull product={product} />
-                  {profile && profile.commandId == product.commandId && (
+              renderItem={(category) => (
+                <>
+                  <CategoryPreviewFull key={category.id} category={category} />
+                  {profile && profile.commandId == category.commandId && (
                     <Box sx={{ p: 2 }}>
-                      <ProductActions
-                        product={product}
-                        onEdit={() => handleProductAction(product, 'edit')}
-                        onDelete={() => handleProductAction(product, 'delete')}
-                        isDeleting={deleteProductMutation.variables === product.id && deleteProductMutation.isPending}
+                      <CategoryActions
+                        category={category}
+                        onEdit={handleOpenEditModal}
+                        onDelete={handleOpenDeleteDialog}
+                        isDeleting={
+                          deleteCategoryMutation.variables === category.id && deleteCategoryMutation.isPending
+                        }
                       />
                     </Box>
                   )}
-                </Box>
+                </>
               )}
+              itemGridProps={{
+                sx: { xs: 12, sm: 6, md: 4 },
+              }}
             />
           </Grid>
 
@@ -338,44 +312,41 @@ const ProductPage: React.FC = () => {
           {/* Индикатор фоновой загрузки */}
           {isFetching && !isLoading && (
             <Box textAlign="center" mt={1}>
-              {t('components.product.updating')}
+              {t('components.category.updating')}
             </Box>
           )}
         </>
       )}
 
       {/* Модальное окно формы */}
-      <ProductFormModal
+      <CategoryFormModal
         open={isModalOpen}
         onClose={handleCloseModal}
         onSubmit={handleFormSubmit}
-        title={productToEdit ? t('components.product.editProduct') : t('components.product.createProduct')}
-        submitButtonText={productToEdit ? t('components.product.update') : t('components.product.create')}
-        isSubmitting={createProductMutation.isPending || updateProductMutation.isPending}
-        initialData={productToEdit}
-        categories={categories}
-        loading={isCategoriesLoading}
+        title={categoryToEdit ? t('components.category.editCategory') : t('components.category.createCategory')}
+        isSubmitting={createCategoryMutation.isPending || updateCategoryMutation.isPending}
+        initialData={categoryToEdit}
       />
 
       {/* Диалог подтверждения удаления */}
       <Dialog open={isDeleteDialogOpen} onClose={handleCloseDeleteDialog}>
-        <DialogTitle>{t('components.product.confirmDelete')}</DialogTitle>
+        <DialogTitle>{t('components.category.confirmDelete')}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {productToDelete && t('components.product.confirmDeleteMessage', { name: productToDelete.name })}
+            {categoryToDelete && t('components.category.confirmDeleteMessage', { name: categoryToDelete.name })}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDeleteDialog} disabled={deleteProductMutation.isPending}>
-            {t('components.product.cancel')}
+          <Button onClick={handleCloseDeleteDialog} disabled={deleteCategoryMutation.isPending}>
+            {t('components.category.cancel')}
           </Button>
           <Button
             onClick={handleConfirmDelete}
             color="error"
-            disabled={deleteProductMutation.isPending}
-            startIcon={deleteProductMutation.isPending ? <CircularProgress size={20} /> : <DeleteIcon />}
+            disabled={deleteCategoryMutation.isPending}
+            startIcon={deleteCategoryMutation.isPending ? <CircularProgress size={20} /> : <DeleteIcon />}
           >
-            {t('components.product.delete')}
+            {t('components.category.delete')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -383,4 +354,4 @@ const ProductPage: React.FC = () => {
   );
 };
 
-export default ProductPage;
+export default CategoryPage;

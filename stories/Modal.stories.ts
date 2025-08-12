@@ -1,5 +1,5 @@
 import { fn } from '@storybook/test';
-import { default as Modal } from '@shared/ui/modal';
+import { Modal } from '@shared/ui/modal';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const modal: Meta<typeof Modal> = {

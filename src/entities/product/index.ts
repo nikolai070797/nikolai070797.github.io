@@ -4,6 +4,11 @@ export type { ProductFilters } from "./model/ProductFilters"
 export type { ProductParams } from "./model/ProductParams"
 export type { ProductsResult } from "./model/ProductsResult"
 
+export { ProductForm, type ProductFormProps } from "./ui/ProductForm/ProductForm"
+
+export * from './ui/preview-full/PreviewFull'
+export * from './ui/preview-mini/PreviewMini'
+
 // // Пример использования
 // const product: Product = {
 //   id: '1',
