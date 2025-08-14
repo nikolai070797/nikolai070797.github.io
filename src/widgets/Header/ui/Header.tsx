@@ -29,10 +29,11 @@ const Header = () => {
           </NavLink>
 
           <Box className={s.navContainer}>
-            <NavLink to="/modal">{t("pages.modal.title")}</NavLink>
-            <NavLink to="/cart">{t("pages.cart.title")}</NavLink>
+            {/* <NavLink to="/modal">{t("pages.modal.title")}</NavLink> */}
+            {/* <NavLink to="/cart">{t("pages.cart.title")}</NavLink> */}
             <NavLink to="/product">{t("pages.product.title")}</NavLink>
-            <NavLink to="/examples">{t("pages.examples.title")}</NavLink>
+            <NavLink to="/category">{t("pages.category.title")}</NavLink>
+            {/* <NavLink to="/examples">{t("pages.examples.title")}</NavLink> */}
           </Box>
 
           <Box className={s.actionsContainer}>

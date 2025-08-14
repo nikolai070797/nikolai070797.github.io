@@ -10,7 +10,7 @@ export type PreviewMiniProps = {
   product: ProductPreview;
 };
 
-const PreviewMini = memo(({ product }: PreviewMiniProps) => {
+export const PreviewMini = memo(({ product }: PreviewMiniProps) => {
   return (
     <Box className={s.container}>
       <List>
@@ -40,5 +40,3 @@ const PreviewMini = memo(({ product }: PreviewMiniProps) => {
     </Box>
   );
 });
-
-export default PreviewMini;

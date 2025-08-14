@@ -1,6 +1,6 @@
 import { ClientForm, ClientFormValues } from '@features/forms/ClientForm';
 import { useProfileStore } from '../model/profileStore';
-import { Modal } from '@shared/ui';
+import { Modal } from '@shared/ui/modal';
 import { Typography, AlertTitle, Alert, Snackbar, Slide } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';

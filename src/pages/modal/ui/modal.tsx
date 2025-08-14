@@ -1,5 +1,5 @@
 import { IconButton, InputBase, Paper, Typography } from '@mui/material';
-import { Modal } from '@shared/ui';
+import { Modal } from '@shared/ui/modal';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';

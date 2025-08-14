@@ -15,7 +15,45 @@
       "oldPrice": "Old price",
       "price": "Price",
       "category": "Category",
-      "submit": "Submit"
+      "submit": "Submit",
+      "addProduct": "Add product",
+      "editProduct": "Edit product",
+      "createProduct": "Create new product",
+      "update": "Update",
+      "create": "Create",
+      "confirmDelete": "Confirm deletion",
+      "confirmDeleteMessage": "Are you sure you want to delete the product \"{{name}}\"? This action cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "edit": "Edit",
+      "updating": "Updating...",
+      "createdAt": "Creation date",
+      "updatedAt": "Update date",
+      "sortOrder": "Order",
+      "ascending": "Ascending",
+      "descending": "Descending"
+    },
+    "category": {
+      "name": "Name",
+      "photo": "Photo (URL)",
+      "create": "Create",
+      "update": "Update",
+      "invalid_name": "Name is required",
+      "invalid_photo": "Must be a valid URL",
+      "addCategory": "Add category",
+      "editCategory": "Edit category",
+      "createCategory": "Create new category",
+      "confirmDelete": "Confirm deletion",
+      "confirmDeleteMessage": "Are you sure you want to delete the category \"{{name}}\"? This action cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "edit": "Edit",
+      "updating": "Updating...",
+      "createdAt": "Creation date",
+      "updatedAt": "Update date",
+      "sortOrder": "Order",
+      "ascending": "Ascending",
+      "descending": "Descending"
     },
     "client": {
       "name": "Name",
@@ -36,8 +74,9 @@
   "pages": {
     "home": { "title": "Home" },
     "modal": { "title": "Modal" },
-    "cart": { "title": "Cart", "empty": "Cart is empty", "clear": "Clear Cart", "showMore": "Show more" },
-    "product": { "title": "Product" },
+    "cart": { "title": "Cart", "empty": "Cart is empty", "clear": "Clear Cart", "showMore": "Show more", "total": "Total" },
+    "product": { "title": "Catalog" },
+    "category": { "title": "Categories" },
     "profile": {
       "title": "Profile",
       "updateProfile": {
@@ -52,6 +91,7 @@
   },
   "errors": {
     "LoadingProducts": "Error loading products",
+    "LoadingCategories": "Error loading categories",
     "auth": {
       "invalid_email": "Invalid email address",
       "invalid_password": "Password must be at least {{length}} characters",
@@ -60,8 +100,13 @@
     "product": {
       "invalid_name": "Name is required",
       "invalid_photo": "Must be a valid URL",
+      "invalid_oldPrice_min": "Price must be positive",
       "invalid_price": "Price must be positive",
       "invalid_category": "Category is required"
+    },
+    "category": {
+      "invalid_name": "Name is required",
+      "invalid_photo": "Must be a valid URL"
     },
     "client": {
       "invalid_name": "Name is required",

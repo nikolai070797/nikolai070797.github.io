@@ -1,5 +1,4 @@
-import { Product } from '@entities/product';
-import { ProductForm } from '@features/forms';
+import { ProductForm } from '@entities/product';
 import { fetchCategories, fetchRandomCategories } from '@shared/api/categories';
 import { fetchProducts } from '@shared/api/products';
 import type { Meta, StoryObj } from '@storybook/react';

@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Product } from '@entities/product';
-import { ProductList } from '@features/ProductList';
+import { List } from '@shared/ui/list';
 import { createRandomProduct } from '@homeworks/ts1/3_write';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { CartItem } from '@shared/ui/cart';
 
-const meta: Meta<typeof ProductList> = {
-  component: ProductList,
+const meta: Meta<typeof List> = {
+  component: List,
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
@@ -16,7 +16,7 @@ const meta: Meta<typeof ProductList> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof ProductList>;
+type Story = StoryObj<typeof List>;
 
 const createInitialProducts = () => {
   const products: Product[] = [];
@@ -43,8 +43,8 @@ export const Default: Story = {
 
     return (
       <>
-        <ProductList
-          products={products}
+        <List
+          items={products}
           renderItem={(product) => <CartItem product={product} onRemove={handleRemoveProduct(product.id)} />}
         />
         <Button onClick={() => generateRandomProducts(3)}>{t('showMore')}</Button>

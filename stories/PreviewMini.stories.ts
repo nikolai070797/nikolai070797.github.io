@@ -1,5 +1,5 @@
 import { createRandomProduct } from '@homeworks/ts1/3_write';
-import { PreviewMini } from '@shared/ui/product';
+import { PreviewMini } from '@entities/product';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const myProduct = createRandomProduct(new Date().toString());

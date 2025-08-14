@@ -8,7 +8,7 @@ export type PreviewFullProps = {
   product: Product;
 };
 
-const PreviewFull = memo(({ product }: PreviewFullProps) => {
+export const PreviewFull = memo(({ product }: PreviewFullProps) => {
   return (
     <Box id={product.id}>
       <List>
@@ -16,7 +16,7 @@ const PreviewFull = memo(({ product }: PreviewFullProps) => {
           <Typography variant="h6">{product.name}</Typography>
         </ListItem>
         <ListItem>
-          <Typography>{product.photo && <img src={product.photo} />}</Typography>
+          <Typography>{product.photo && <img width={'100%'} height={'100%'} src={product.photo} />}</Typography>
         </ListItem>
         <ListItem>
           <Typography>{product.desc}</Typography>
@@ -39,7 +39,7 @@ const PreviewFull = memo(({ product }: PreviewFullProps) => {
           </Box>
         </ListItem>
       </List>
-      <Box>
+      {product.category && (
         <ListItem>
           <Chip
             id={product.category.id}
@@ -47,9 +47,36 @@ const PreviewFull = memo(({ product }: PreviewFullProps) => {
             label={product.category.name}
           />
         </ListItem>
-      </Box>
+      )}
+      <ListItem>
+        <Typography variant="body2" color="textSecondary">
+          Создано:{' '}
+          {new Date(product.createdAt).toLocaleDateString('ru-RU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          })}
+        </Typography>
+      </ListItem>
+      <ListItem>
+        <Typography variant="body2" color="textSecondary">
+          Обновлено:{' '}
+          {new Date(product.updatedAt).toLocaleDateString('ru-RU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          })}
+        </Typography>
+      </ListItem>
+      <ListItem>
+        <Typography variant="body2" color="textSecondary">
+          commandId: {product.commandId}
+        </Typography>
+      </ListItem>
     </Box>
   );
 });
-
-export default PreviewFull;

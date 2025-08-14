@@ -5,6 +5,7 @@ export default [
     route("cart", "pages/cart/index.ts"),
     route("modal", "pages/modal/index.ts"),
     route("product", "pages/product/index.ts"),
+    route("category", "pages/category/index.ts"),
     route("examples", "pages/examples/index.ts"),
     route("login", "pages/login/index.ts"),
     route("profile", "pages/profile/index.ts"),

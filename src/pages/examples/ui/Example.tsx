@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import { ProductForm } from '@features/forms';
+import { ProductForm, ProductParams } from '@entities/product';
 import { fetchCategories } from '@shared/api/categories';
 import { ClientForm, ClientFormValues } from '@features/forms/ClientForm';
 import { Category } from '@entities/category';
@@ -97,7 +97,7 @@ const ExamplePage = () => {
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <ProductForm categories={categories} loading={loading} />
+        <ProductForm categories={categories} loading={loading} onSubmit={(data) => console.log(data)} />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <AuthForm />

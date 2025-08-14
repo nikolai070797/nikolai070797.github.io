@@ -13,7 +13,7 @@ export type ModalProps = {
   container?: HTMLElement;
 };
 
-const Modal: FC<ModalProps> = ({ container = document.body, open, onClose, children, title}) => {
+export const Modal: FC<ModalProps> = ({ container = document.body, open, onClose, children, title}) => {
   return createPortal(
     <Dialog maxWidth="sm" fullWidth={true} open={open} onClose={onClose}>
       <ModalHeader onClose={onClose}>{title}</ModalHeader>
@@ -24,5 +24,3 @@ const Modal: FC<ModalProps> = ({ container = document.body, open, onClose, child
   );
   // return createPortal(<ModalMask children={children} visible={open} onClose={onClose} {...props}/>, container);
 };
-
-export default Modal;

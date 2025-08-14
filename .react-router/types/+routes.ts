@@ -22,6 +22,9 @@ type Pages = {
   "/product": {
     params: {};
   };
+  "/category": {
+    params: {};
+  };
   "/examples": {
     params: {};
   };
@@ -41,7 +44,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/cart" | "/modal" | "/product" | "/examples" | "/login" | "/profile" | "/*";
+    page: "/" | "/cart" | "/modal" | "/product" | "/category" | "/examples" | "/login" | "/profile" | "/*";
   };
   "./pages/home/index.ts": {
     id: "pages/home/index";
@@ -58,6 +61,10 @@ type RouteFiles = {
   "pages/product/index.ts": {
     id: "pages/product/index";
     page: "/product";
+  };
+  "pages/category/index.ts": {
+    id: "pages/category/index";
+    page: "/category";
   };
   "pages/examples/index.ts": {
     id: "pages/examples/index";
