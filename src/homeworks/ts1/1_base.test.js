@@ -2,7 +2,7 @@
 // it('remove it', () => {
 //   expect(true).toBe(true);
 // });
-
+import { describe, expect, it } from 'vitest'
 import { transformCustomers } from './1_base.ts';
 
 describe('all', () => {

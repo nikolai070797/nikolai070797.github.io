@@ -1,31 +1,31 @@
 {
-  "include": [
-    "**/*",
-    ".react-router/types/**/*",
-    "**/*.ts", "**/*.tsx", 
-    "src/custom.d.ts"
-  ],
+  "include": ["**/*", ".react-router/types/**/*", "**/*.ts", "**/*.tsx", "src/custom.d.ts"],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "types": ["node", "vite/client"],
+    "types": ["node", "vite/client", "vitest/globals"],
     "target": "ES2022",
     "module": "ES2022",
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types",
+      "./node_modules",
+      "./node_modules/@microsoft",
+    ],
     "rootDirs": [".", "./.react-router/types"],
     "baseUrl": ".",
     "paths": {
       "@public/*": ["./public/*"],
       "@app/*": ["./src/app/*"],
-			"@entities/*": ["./src/entities/*"],
-			"@features/*": ["./src/features/*"],
-			"@pages/*": ["./src/pages/*"],
-			"@shared/*": ["./src/shared/*"],
-			"@widgets/*": ["./src/widgets/*"],
-			"@homeworks/*": ["./src/homeworks/*"],
+      "@entities/*": ["./src/entities/*"],
+      "@features/*": ["./src/features/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@widgets/*": ["./src/widgets/*"],
+      "@homeworks/*": ["./src/homeworks/*"],
 
-			"@/*": ["./src/*"],
-
+      "@/*": ["./src/*"]
     },
     "esModuleInterop": true,
     "allowImportingTsExtensions": true,
@@ -37,9 +37,9 @@
     "isolatedModules": true,
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
-		"useDefineForClassFields": true,
-		"noUnusedLocals": false,
-		"noUnusedParameters": true,
-		"noFallthroughCasesInSwitch": true,
+    "useDefineForClassFields": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
   }
 }
