@@ -25,7 +25,7 @@ export const categoryApi = {
       Object.entries(filters).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
           // Сериализуем вложенные объекты, как в productApi
-          if (['pagination', 'sorting', 'createdAt', 'updatedAt', 'ids'].includes(key)) {
+          if (['pagination', 'sorting', 'ids', 'createdAt', 'updatedAt', 'ids', 'name'].includes(key)) {
             processedFilters[key] = JSON.stringify(value);
           } else {
             processedFilters[key] = value;
