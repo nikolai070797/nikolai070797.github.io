@@ -54,12 +54,17 @@ export const WithErrors: Story = {
       price: -100,
       id: '',
       photo: '',
-      createdAt: '',
+      createdAt: new Date(''),
       category: {
         id: '',
         name: '',
         photo: undefined,
+        createdAt: new Date(''),
+        updatedAt: new Date(''),
+        commandId: ''
       },
+      updatedAt: new Date(''),
+      commandId: ''
     },
     loading: false,
   },

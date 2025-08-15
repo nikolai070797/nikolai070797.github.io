@@ -22,17 +22,6 @@ export const PreviewFull = memo(({ product }: PreviewFullProps) => {
           <Typography>{product.desc}</Typography>
         </ListItem>
         <ListItem>
-          <Typography>
-            {new Date(product.createdAt).toLocaleDateString('ru-RU', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          </Typography>
-        </ListItem>
-        <ListItem>
           <Box width={1} sx={{ display: 'inline-flex', justifyContent: 'space-between' }}>
             <Price price={product.price} oldPrice={product.oldPrice} />
             <CartButtonAdd product={product} />

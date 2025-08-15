@@ -3,7 +3,8 @@
         "browser": true,
         "node": true,
         "commonjs": true,
-        "es2021": true
+        "es2021": true,
+		"vitest-globals/env": true
     },
     "extends": [
         "plugin:react/jsx-runtime", // позволяет не импортировать реакт
@@ -12,7 +13,6 @@
         // "airbnb",
         "prettier", // отключает конфликты с prettier
         "plugin:prettier/recommended",
-        "plugin:jest/recommended",
         "eslint:recommended",
         "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended",
