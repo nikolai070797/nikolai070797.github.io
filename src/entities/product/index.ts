@@ -3,6 +3,7 @@ export type { ProductPreview } from "./model/ProductPreview"
 export type { ProductFilters } from "./model/ProductFilters"
 export type { ProductParams } from "./model/ProductParams"
 export type { ProductsResult } from "./model/ProductsResult"
+export { ProductType } from "./model/ProductType"
 
 export { ProductForm, type ProductFormProps } from "./ui/ProductForm/ProductForm"
 
